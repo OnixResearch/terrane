@@ -25,6 +25,18 @@ Historical proof receipts and versioned `trellis-*` policy and consumer-profile
 identifiers retain their original identity; this rename does not regenerate
 their proofs or make private source revisions publicly accessible.
 
+**Public source snapshot; NOT RELEASE-ADMITTED.** The independently derived
+history withholds original private ancestry. Operational dependencies are pinned
+to public source snapshots; the UCAN-facing profile binds an anonymously fetched,
+immutable Terrane source. Source availability and profile alignment do not confer
+downstream correctness or release eligibility.
+
+Historical Aeneas and May 17 upgrade-trial profiles/receipts retain their original
+provider revisions. Their strict current-source re-admission remains pending;
+the full Nix rail must not be described as green from a source publication.
+The preserved Cairn policy also lacks the public CLI's required initial
+`outcome-machine` workflow profile, so native sync/archive remain blocked.
+
 ## Usage
 
 ```toml
@@ -640,12 +652,11 @@ The drift checker treats the compact lists below as README catalog entries for p
 
 Start with [CONTRIBUTING.md](CONTRIBUTING.md) for the public workflow, module template, Tracey annotation rules, proof-gap policy, and baseline/final validation expectations. Use [docs/module-guide.md](docs/module-guide.md) to choose modules by task or problem domain, [docs/module-index.md](docs/module-index.md) for objective module maturity facts, [docs/invariant-surface-catalog.md](docs/invariant-surface-catalog.md) for invariant evidence rows, [docs/proof-evidence-bundles.md](docs/proof-evidence-bundles.md) for downstream evidence export, [docs/proof-evidence-ir-chain.json](docs/proof-evidence-ir-chain.json) for linked verifier-receipt evidence chains, [docs/kani-boundary.md](docs/kani-boundary.md) for complementary Kani evidence boundaries, [docs/proof-artifact-manifest.md](docs/proof-artifact-manifest.md) for exported primitive manifest rows, [docs/ucan-bridge-coverage.md](docs/ucan-bridge-coverage.md) for UCAN bridge coverage, [docs/verified-logic-consumer-profile.md](docs/verified-logic-consumer-profile.md) for direct dependency and audited vendoring metadata, and [docs/cookbook.md](docs/cookbook.md) for short workflow recipes.
 
-Nix proof checks resolve locked external inputs, including Octet and onixpkgs;
-ordinary Cargo tests do not reproduce the Verus verification result. Before
-publishing Terrane, make the locked inputs anonymously fetchable so outside
-contributors can run the same checks. Lifecycle changes additionally require
-the Cairn CLI described in [CONTRIBUTING.md](CONTRIBUTING.md). For confidential
-vulnerability reports, see [SECURITY.md](SECURITY.md).
+Nix proof checks resolve locked public inputs, including independently published
+Octet and onixpkgs sources. Ordinary Cargo tests do not reproduce the Verus
+verification result. Lifecycle changes additionally require the public Cairn CLI
+and compatible governing policy described in [CONTRIBUTING.md](CONTRIBUTING.md).
+For confidential vulnerability reports, see [SECURITY.md](SECURITY.md).
 
 ```bash
 nix develop                # enter devshell
@@ -703,7 +714,7 @@ See [docs/nickel-export-cutover.md](docs/nickel-export-cutover.md) for the check
 
 The Aeneas pilot selects only `src/arithmetic.rs::abs_diff` from normal Cargo macro erasure. It does not use a copied Rust function.
 
-Octet revision `890f424cd7b1b2015f39c0eb5747f1bd1e576028` supplies the Aeneas, Charon, Lean, policy, compatibility, and consumer-contract boundary.
+The historical Aeneas pilot records Octet revision `890f424cd7b1b2015f39c0eb5747f1bd1e576028`; `flake.nix` selects its independently published public source for acquisition. Frozen receipts are not relabelled as current-source admission.
 
 Charon emits one non-errorful LLBC declaration. Aeneas maps it to `verified_logic.arithmetic.abs_diff` in one generated Lean file.
 
@@ -730,9 +741,9 @@ and trusted-marker counts, and are reported only as adapted-source results. The
 SOSP microcases remain diagnostic-only and VerusBelt remains a Rocq
 semantic-reference audit.
 
-Octet revision `374bd16b26cee2af34211a29bfa531c016811f51` is published and
-locked as the exact provider. Terrane's default proof check and wrapper now
-consume Octet Verus `0.2026.05.17.e479cce`; the former
+The production provider is locked to the independent public `octet-public`
+source selected by `inputs.octet` in `flake.nix`. Terrane's default proof check
+and wrapper consume Octet Verus `0.2026.05.17.e479cce`; the former
 `0.2026.03.22.5e66329` package remains only as the receipt's historical
 comparison baseline.
 

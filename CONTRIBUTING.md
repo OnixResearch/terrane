@@ -102,10 +102,15 @@ A complete package normally includes:
 Run gates before implementation, sync accepted specs after the implementation is
 validated, then archive only after every task is complete:
 
-The [Cairn CLI](https://github.com/OnixResearch/cairn) is a separate
-prerequisite for lifecycle changes. Install it and ensure `cairn` is on `PATH`;
-`scripts/proof-review-loop.rs` also accepts `CAIRN_BIN` to select the executable.
-Public contributors cannot run these gates until Cairn is anonymously available.
+The [public Cairn CLI](https://github.com/OnixResearch/cairn-public) is a separate
+prerequisite for lifecycle changes. Use the exact `inputs.cairn` revision in
+`flake.nix`, install it and ensure `cairn` is on `PATH`;
+`scripts/proof-review-loop.rs` also accepts `CAIRN_BIN`.
+
+The preserved repository policy currently lacks that CLI's required initial
+`outcome-machine` workflow profile. Native gates report this incompatibility;
+do not substitute another policy or claim sync/archive completion. Source-only
+publication does not resolve or waive this lifecycle blocker.
 
 ```bash
 cairn gate proposal <slug> --root .

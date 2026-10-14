@@ -10,6 +10,6 @@ let base = import "../base.ncl" in
     base.profile.ucan_modules
     []
     []
-    ["Imported Trellis primitives do not prove UCAN token correctness."]
+    ["Imported Terrane primitives do not prove UCAN token correctness."]
     "",
 } | base.contracts.ConsumerFixture

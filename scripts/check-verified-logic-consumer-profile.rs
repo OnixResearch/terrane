@@ -35,8 +35,8 @@ const GUIDE_PATH: &str = "docs/verified-logic-consumer-profile.md";
 const README_PATH: &str = "README.md";
 const CARGO_TOML_PATH: &str = "Cargo.toml";
 const PACKAGE_NAME: &str = "verified-logic";
-const SOURCE_REPOSITORY: &str = "https://github.com/OnixResearch/trellis";
-const PROOF_OWNER: &str = "Trellis";
+const SOURCE_REPOSITORY: &str = "https://github.com/OnixResearch/terrane";
+const PROOF_OWNER: &str = "Terrane";
 const DIRECT_MODE: &str = "direct_dependency";
 const VENDORED_MODE: &str = "vendored_snapshot";
 const VENDORED_ROOT: &str = "vendor/verified-logic";
@@ -63,11 +63,11 @@ const MAXIMUM_NON_CLAIMS: usize = 64;
 const MAXIMUM_ARTIFACT_BYTES: u64 = 1_048_576;
 const REQUIRED_BASE_ARTIFACTS: &[&str] = &["Cargo.toml", "LICENSE", "src/lib.rs"];
 const REQUIRED_NON_CLAIMS: &[&str] = &[
-    "Imported Trellis primitives do not prove UCAN token correctness.",
-    "Imported Trellis primitives do not prove downstream authorization policy.",
-    "Imported Trellis primitives do not prove verifier soundness beyond Trellis's stated boundary.",
-    "Imported Trellis primitives do not prove external consumer readiness.",
-    "Imported Trellis primitives do not prove whole-system security.",
+    "Imported Terrane primitives do not prove UCAN token correctness.",
+    "Imported Terrane primitives do not prove downstream authorization policy.",
+    "Imported Terrane primitives do not prove verifier soundness beyond Terrane's stated boundary.",
+    "Imported Terrane primitives do not prove external consumer readiness.",
+    "Imported Terrane primitives do not prove whole-system security.",
 ];
 const GUIDE_REQUIRED_TERMS: &[&str] = &[
     "Direct dependency is the normal consumption route",
@@ -75,11 +75,11 @@ const GUIDE_REQUIRED_TERMS: &[&str] = &[
     "MPL-2.0",
     "do not prove UCAN token correctness",
     "do not prove downstream authorization policy",
-    "do not prove verifier soundness beyond Trellis's stated boundary",
+    "do not prove verifier soundness beyond Terrane's stated boundary",
     "do not prove external consumer readiness",
     "do not prove whole-system security",
 ];
-const PATCH_BOUNDARY_TERM: &str = "does not extend imported Trellis proof claims";
+const PATCH_BOUNDARY_TERM: &str = "does not extend imported Terrane proof claims";
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 struct ConsumerProfile {
@@ -946,7 +946,7 @@ fn fixture_profile() -> (ConsumerProfile, RepositoryObservation) {
             proof_manifest_path: "docs/proof-artifact-manifest.json".to_string(),
             proof_manifest_bytes: fixture_bytes("proof"),
             proof_manifest_blake3: fixture_digest("proof"),
-            supported_claim: "Source and profile alignment for imported Trellis verified primitives only.".to_string(),
+            supported_claim: "Source and profile alignment for imported Terrane verified primitives only.".to_string(),
         },
         required_non_claims: required_non_claims(),
     };

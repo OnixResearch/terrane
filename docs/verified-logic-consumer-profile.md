@@ -2,24 +2,23 @@
 
 Terrane owns the proof semantics and source identity for `verified-logic`.
 [`consumer-profile/profile.ncl`](../consumer-profile/profile.ncl) and its
-[checked JSON projection](../consumer-profile/generated/profile.json) describe
-a **historical Trellis consumer release**, not an anonymously available Terrane
-release. Its exact repository, revision, and `trellis-*` schema IDs remain
-unchanged; a new reviewed profile is required before public direct consumption.
+[checked JSON projection](../consumer-profile/generated/profile.json) bind the
+independently published Terrane source at `df99309c31e95b8068d90153e362dad6234d0cca`.
+The versioned `trellis-*` schema IDs remain protocol identities. Historical
+Trellis receipts and private revisions are not relabelled as this public source.
 
-## Historical pinned direct dependency
+## Pinned public direct dependency
 
-**Direct dependency is the normal consumption route** for a reviewed release
-profile. The revision below remains in the private Trellis repository and must
-not be presented as a public Terrane install command. Consumers of this
-historical profile require authorized access, disabled default features, and
-only the listed supported features. It has no supported Cargo features:
+**Direct dependency is the normal consumption route** for the reviewed profile.
+Use the exact public HTTPS repository and immutable revision below, disable
+default features, and request only the listed supported features. This profile
+has no supported Cargo features:
 
 ```toml
 [dependencies]
 verified-logic = {
-  git = "https://github.com/OnixResearch/trellis",
-  rev = "1f03111b92cc36aade07359c96773e086908c95f",
+  git = "https://github.com/OnixResearch/terrane",
+  rev = "df99309c31e95b8068d90153e362dad6234d0cca",
   default-features = false,
 }
 ```
@@ -29,15 +28,15 @@ coordinate, source repository, revision, feature decision, complete selected
 module list, and required non-claims. The Nix profile check resolves the locked
 `trellis-consumer-release-src` input at that same revision and measures the
 selected files from that immutable source, rather than trusting the current
-worktree alone. Passing compatibility means those values match the reviewed
-historical profile; it does not execute or certify consumer code.
+worktree alone. Passing compatibility means those values match the public
+profile; it does not execute or certify consumer code or admit a release.
 
 ## Audited vendored fallback
 
 **Vendoring is an audited fallback** for bounded offline, release, or toolchain
 constraints. A fallback snapshot must record:
 
-- the exact Trellis source repository and immutable revision;
+- the exact Terrane source repository and immutable revision;
 - `vendor/verified-logic` as its snapshot root;
 - every selected UCAN-facing module from the profile;
 - the selected `Cargo.toml`, `LICENSE`, crate root, and module file byte counts
@@ -45,13 +44,13 @@ constraints. A fallback snapshot must record:
 - the `deny_unrecorded_changes` dirty-state policy;
 - every local patch or addition, with an explicit approved exception, rationale,
   verification evidence, and a boundary stating that it does not extend imported
-  Trellis proof claims; and
+  Terrane proof claims; and
 - all profile-required non-claims.
 
 An absent or stale revision, missing module, changed digest, unapproved patch,
 unverified local addition, or weakened non-claim fails closed. Snapshot alignment
 covers only the inventoried paths; it is not a claim that unlisted consumer files
-or external services match Trellis.
+or external services match Terrane.
 
 The selected `verified-logic` files remain under `MPL-2.0`. Vendored consumers
 must preserve the license and applicable notices; package alignment does not
@@ -81,18 +80,24 @@ canonical in-memory report fields before envelope serialization.
 
 ## Proof and authority boundary
 
-A passing report supports only source and profile alignment for imported Trellis
+A passing report supports only source and profile alignment for imported Terrane
 verified primitives. In particular, imported primitives:
 
 - do not prove UCAN token correctness;
 - do not prove downstream authorization policy;
-- do not prove verifier soundness beyond Trellis's stated boundary;
+- do not prove verifier soundness beyond Terrane's stated boundary;
 - do not prove external consumer readiness; and
 - do not prove whole-system security.
 
 Consumers still own parsing, cryptography integration, key and proof resolution,
 clocks, storage, networking, caveat policy, revocation freshness, replay
 persistence, shell orchestration, and their own release evidence.
+
+The selected public source is observed separately with the production Verus
+`0.2026.05.17.e479cce` profile and its configured `--rlimit 20`. The profile check
+does not itself execute Verus. Raw historical proof artifacts retain their
+original provenance; matching their source identities is not a new verifier
+soundness or downstream-correctness claim.
 
 ## Refreshing the profile
 

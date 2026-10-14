@@ -10,21 +10,23 @@
     };
     flake-utils.url = "github:numtide/flake-utils";
     octet = {
-      url = "github:OnixResearch/octet?rev=374bd16b26cee2af34211a29bfa531c016811f51";
+      url = "github:OnixResearch/octet-public/bf633b7ceb6ae2b57eee8e8e53b4f7821337dbd5";
       inputs.crane.follows = "crane";
     };
     # r[impl trellis.aeneas_cross_verifier.provider_consumption]
     octet-aeneas = {
-      url = "github:OnixResearch/octet?rev=890f424cd7b1b2015f39c0eb5747f1bd1e576028";
+      url = "github:OnixResearch/octet-public/b9b4b4044142820a07dc00332c36e07d1e1c4711";
       inputs.crane.follows = "crane";
     };
     # r[impl trellis.nickel_export_cutover.source]
     nickel-export = {
       url = "github:OnixResearch/nickel-export/257fafc1c746f1faf156207043a4c826bfb16d49";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.cairn.follows = "cairn";
     };
+    cairn.url = "github:OnixResearch/cairn-public/acb4c3d2cb90b231e07a6b71115c79adde46349c";
     trellis-consumer-release-src = {
-      url = "git+ssh://git@github.com/OnixResearch/trellis.git?rev=1f03111b92cc36aade07359c96773e086908c95f";
+      url = "git+https://github.com/OnixResearch/terrane.git?rev=df99309c31e95b8068d90153e362dad6234d0cca";
       flake = false;
     };
     # r[impl trellis.nickel_toolchain.cohort]

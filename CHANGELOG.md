@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Published independently derived public dependency sources and replaced Terrane's reachable private Nix inputs with immutable public revisions; original private histories remain withheld.
+- Replaced the stale private Trellis UCAN consumer profile with exact public Terrane source identities and maintained fail-closed compatibility fixtures. Historical proof artifacts, signed receipts and license grants remain unchanged.
+- Recorded current-source proof/profile observations separately from pending historical-provider re-admission and incompatible native lifecycle policy; source publication is not release admission.
 - Named the clean public project **Terrane** (formerly Trellis), while preserving the Rust crate name `verified-logic` and the historical versioned consumer-profile identities.
 - Prepared portable contributor commands, confidential vulnerability reporting guidance, immutable CI action pins, a smaller consumer crate archive, and scoped crate-level proof claims for public release review.
 - Added the Cairn policy projection's upstream AGPL notice, license text, pinned Nickel authoring inputs, and checked source import; removed two unreferenced planning documents while retaining Tracey requirements and proof/evidence contracts.

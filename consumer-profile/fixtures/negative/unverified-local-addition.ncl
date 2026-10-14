@@ -17,7 +17,7 @@ let base = import "../base.ncl" in
         approved = true,
         rationale = "consumer-local adapter",
         verification_evidence = "",
-        claim_boundary = "does not extend imported Trellis proof claims",
+        claim_boundary = "does not extend imported Terrane proof claims",
       },
     }]
     base.profile.required_non_claims

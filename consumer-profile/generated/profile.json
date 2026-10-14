@@ -1,8 +1,8 @@
 {
   "artifacts": [
     {
-      "blake3": "6b3abf06f8a3af25296c40f64cd8732bdea2a3aebcb5afbc6cda429cf7ff60a4",
-      "bytes": 5592,
+      "blake3": "2fa954e69796c98f09233ef445752d3ae6a953feb061ef75ff35724bff5bb87b",
+      "bytes": 5685,
       "path": "Cargo.toml"
     },
     {
@@ -11,8 +11,8 @@
       "path": "LICENSE"
     },
     {
-      "blake3": "34a55b7fd7a909b3e65dcf94f51e97625f15e877b530ec269977d6d04ab171c6",
-      "bytes": 52814,
+      "blake3": "47386127f1e4f3a5db3c161b334e0a6eb3176b79a2ae6adbac1b4f779e17c467",
+      "bytes": 52890,
       "path": "src/lib.rs"
     },
     {
@@ -213,21 +213,21 @@
   ],
   "package": {
     "default_features": false,
-    "dependency_coordinate": "git+https://github.com/OnixResearch/trellis?rev=1f03111b92cc36aade07359c96773e086908c95f#verified-logic@0.2.0",
+    "dependency_coordinate": "git+https://github.com/OnixResearch/terrane?rev=df99309c31e95b8068d90153e362dad6234d0cca#verified-logic@0.2.0",
     "name": "verified-logic",
-    "revision": "1f03111b92cc36aade07359c96773e086908c95f",
-    "source_repository": "https://github.com/OnixResearch/trellis",
+    "revision": "df99309c31e95b8068d90153e362dad6234d0cca",
+    "source_repository": "https://github.com/OnixResearch/terrane",
     "supported_features": [],
     "version": "0.2.0"
   },
-  "release_id": "verified-logic-0.2.0-ucan-profile-1f03111",
+  "release_id": "verified-logic-0.2.0-ucan-profile-df99309",
   "report_schema": "trellis-verified-logic-compatibility-report/v1",
   "required_non_claims": [
-    "Imported Trellis primitives do not prove UCAN token correctness.",
-    "Imported Trellis primitives do not prove downstream authorization policy.",
-    "Imported Trellis primitives do not prove verifier soundness beyond Trellis's stated boundary.",
-    "Imported Trellis primitives do not prove external consumer readiness.",
-    "Imported Trellis primitives do not prove whole-system security."
+    "Imported Terrane primitives do not prove UCAN token correctness.",
+    "Imported Terrane primitives do not prove downstream authorization policy.",
+    "Imported Terrane primitives do not prove verifier soundness beyond Terrane's stated boundary.",
+    "Imported Terrane primitives do not prove external consumer readiness.",
+    "Imported Terrane primitives do not prove whole-system security."
   ],
   "schema_version": "trellis-verified-logic-consumer-profile/v1",
   "ucan_modules": [
@@ -277,11 +277,11 @@
     "snapshot_root": "vendor/verified-logic"
   },
   "verification": {
-    "proof_command": "./scripts/verus.sh src/lib.rs",
+    "proof_command": "./scripts/verus.sh src/lib.rs --rlimit 20",
     "proof_manifest_blake3": "93d4105b47720646f886c4b3285e9a9be48e4fad7478f47fda1c0e4bfd070002",
     "proof_manifest_bytes": 21530,
     "proof_manifest_path": "docs/proof-artifact-manifest.json",
-    "proof_owner": "Trellis",
-    "supported_claim": "Source and profile alignment for imported Trellis verified primitives only."
+    "proof_owner": "Terrane",
+    "supported_claim": "Source and profile alignment for imported Terrane verified primitives only."
   }
 }
