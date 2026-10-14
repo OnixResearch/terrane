@@ -1,0 +1,18 @@
+# kind	path	expected value or marker
+package	Cargo.toml	MPL-2.0
+artifact	LICENSE	Mozilla Public License Version 2.0
+contains	CONTRIBUTING.md	You must have the authority to make that grant
+contains	README.md	Machine-checked properties are bounded to the admitted source
+artifact	LICENSES/AGPL-3.0-or-later.txt	GNU AFFERO GENERAL PUBLIC LICENSE
+contains	cairn-policy/UPSTREAM.md	AGPL-3.0-or-later
+contains	cairn-policy/UPSTREAM.md	b6759012db4dab0158936e995b7bad39ac10465b
+contains	cairn-policy/UPSTREAM.md	LICENSES/AGPL-3.0-or-later.txt
+contains	cairn-policy/UPSTREAM.md	57d1f8194930ceacde797af4b53f90ad1daeac18
+contains	cairn-policy/UPSTREAM.md	qualified legal reviewer
+contains	cairn-policy/UPSTREAM.md	257fafc1c746f1faf156207043a4c826bfb16d49
+contains	cairn-policy/UPSTREAM.md	d233902339c02a9c334e7e593de68855ad26c4cb
+artifact	cairn-policy/upstream-source/default.ncl	PolicySchemaVersion
+artifact	cairn-policy/upstream-source/contracts.ncl	LifecycleStores
+artifact	cairn-policy/upstream-source/lifecycle-store-contracts.ncl	max_store_id_bytes
+artifact	cairn-policy/upstream-source/nominal-evidence-identities.ncl	Nominal
+artifact	cairn-policy/sync-cairn-source.py	b6759012db4dab0158936e995b7bad39ac10465b

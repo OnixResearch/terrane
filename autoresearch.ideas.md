@@ -1,0 +1,5 @@
+- Current `active_changes` objective is saturated at `0`; no remaining honest ideas can improve this metric.
+- Deferred Wasm follow-ons remain valid future feature ideas, but they are stale for this loop because they would require opening new changes and would not lower `active_changes`:
+  - control labels plus return/branch arity
+  - unreachable-stack validation judgments
+  - tables plus `call_indirect` signature safety

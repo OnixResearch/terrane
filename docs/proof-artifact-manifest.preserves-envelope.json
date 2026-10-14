@@ -1,0 +1,56 @@
+{
+  "schema_version": "trellis.proof-artifact-manifest.preserves.v1",
+  "producer": "Trellis optional Preserves proof-manifest carrier",
+  "source_manifest": {
+    "path": "docs/proof-artifact-manifest.json",
+    "blake3": "93d4105b47720646f886c4b3285e9a9be48e4fad7478f47fda1c0e4bfd070002",
+    "bytes": 21530
+  },
+  "envelopes": [
+    {
+      "envelope_id": "trellis.preserves.proof_artifact_manifest.seed",
+      "schema_label": "trellis.proof-artifact-manifest.preserves.v1",
+      "source_manifest_digest": "93d4105b47720646f886c4b3285e9a9be48e4fad7478f47fda1c0e4bfd070002",
+      "primitive_ids": [
+        "trellis.arithmetic.abs_diff",
+        "trellis.consensus.fast_path.quorum",
+        "trellis.quorum.majority",
+        "trellis.scheme.bytecode.safety",
+        "trellis.scheme.collection.shapes",
+        "trellis.scheme.contract.blame",
+        "trellis.scheme.interning.state",
+        "trellis.scheme.module.graph",
+        "trellis.scheme.reader.structure",
+        "trellis.scheme.value.equality",
+        "trellis.scheme.value.graph",
+        "trellis.ucan.did.decode_did_key",
+        "trellis.ucan.signature.verify_checked",
+        "trellis.wasm.runtime_bounds.continuation",
+        "trellis.wasm.runtime_bounds.execution",
+        "trellis.wasm.runtime_bounds.resources",
+        "trellis.wasm.runtime_bounds.streaming"
+      ],
+      "canonical_preserves": {
+        "path": "docs/proof-artifact-manifest.preserves",
+        "blake3": "8cc7b48bfb7c963a4fb9800e9d63bcdf0506a8bf1afcd03809b5f233c4f82e2d",
+        "bytes": 914
+      },
+      "allowed_consumers": [
+        "ucan",
+        "octet",
+        "valence",
+        "mantle",
+        "cairn",
+        "basalt",
+        "aspen",
+        "molten"
+      ],
+      "claim": "carrier for proof-manifest identity only",
+      "non_claims": [
+        "not a proof artifact",
+        "not downstream authorization semantics",
+        "not verifier soundness"
+      ]
+    }
+  ]
+}

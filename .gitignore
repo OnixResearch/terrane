@@ -1,0 +1,29 @@
+# Build
+target/
+coverage/
+doc/
+
+# Nix
+/result*
+.direnv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Runtime
+*.redb
+*.sock
+data/
+target-test/
+*.long-type-*.txt
+/.agent
+
+.pi/
+/autoresearch.jsonl
+
+# Local verifier and ad-hoc rustc output
+/.verus-solver-log/
+/*.rlib

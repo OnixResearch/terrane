@@ -1,0 +1,79 @@
+{
+  "schema_version": "trellis-aeneas-targets/v1",
+  "targets": [
+    {
+      "requirement_id": "arithmetic.abs-diff",
+      "module": "src/arithmetic.rs",
+      "statement_blake3": [
+        "b3:a67c10d4699ae7b0ddb5b35eb87552b893fcf038c93fd5c6b4c776d5b172e3fb",
+        "b3:b3df314ff917bb6eb9e26f7a8d56b7c5bc8439da5e5c5076c47a4bee58c7ade4"
+      ],
+      "claim_class": "named-theorem-over-generated-model",
+      "trust_closure": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "receipt": "b3:baa04429d7c1eab4e0a984017f5a29bd02de7ced8aeeebe07bfb003027bcbc04",
+      "receipt_class": "trellis-proof-receipt",
+      "receipt_evidence": "aeneas-pilot/generated/aeneas-proof-receipt.json"
+    },
+    {
+      "requirement_id": "bounds.clamp",
+      "module": "src/bounds.rs",
+      "statement_blake3": [
+        "b3:da7e097a070bdfc3014efab94ffb5b7788a67505710fe2e468d5adea226043b4"
+      ],
+      "claim_class": "named-theorem-over-generated-model",
+      "trust_closure": [
+        "propext"
+      ],
+      "receipt": "b3:63da4db595096c8ea13e6713ec63b7c1d8ece0d2a581282fa0f36c6df10b8d43",
+      "receipt_class": "octet-proof-receipt",
+      "receipt_evidence": "aeneas-frontier/evidence/octet-rail-clamp-2026-09-15/receipt.json"
+    },
+    {
+      "requirement_id": "ordering.min",
+      "module": "src/ordering.rs",
+      "statement_blake3": [
+        "b3:c8aba4965c2ebafe8e4b154795ae5f4001b1eb368c69e9d27b4799c98af698a2",
+        "b3:a46ac334f6bdc807f4f9831f87a943808e4a105fa869fdcaa77c7df0ead24604"
+      ],
+      "claim_class": "named-theorem-over-generated-model",
+      "trust_closure": [
+        "propext"
+      ],
+      "receipt": "b3:9f962f956a545060aeafa7d9495e547d0112349ec75143985eb6bff5792d2a5e",
+      "receipt_class": "local-lake-build",
+      "receipt_evidence": "aeneas-frontier/evidence/lean-2026-09-14.json"
+    },
+    {
+      "requirement_id": "bounds.in-range",
+      "module": "src/bounds.rs",
+      "statement_blake3": [
+        "b3:effbb00facdd0862c9f2c16ed14ac101b675a272ddfd8f522cc723378fa92eee"
+      ],
+      "claim_class": "named-theorem-over-generated-model",
+      "trust_closure": [
+        "propext"
+      ],
+      "receipt": "b3:9f962f956a545060aeafa7d9495e547d0112349ec75143985eb6bff5792d2a5e",
+      "receipt_class": "local-lake-build",
+      "receipt_evidence": "aeneas-frontier/evidence/lean-2026-09-14.json"
+    },
+    {
+      "requirement_id": "interval.contains",
+      "module": "src/interval.rs",
+      "statement_blake3": [
+        "b3:84185cd8f2f22ab70e6ef5c25c3fc433def43eb1fcbdfc5a44fab36d72b07f2c"
+      ],
+      "claim_class": "named-theorem-over-generated-model",
+      "trust_closure": [
+        "propext"
+      ],
+      "receipt": "b3:9f962f956a545060aeafa7d9495e547d0112349ec75143985eb6bff5792d2a5e",
+      "receipt_class": "local-lake-build",
+      "receipt_evidence": "aeneas-frontier/evidence/lean-2026-09-14.json"
+    }
+  ]
+}

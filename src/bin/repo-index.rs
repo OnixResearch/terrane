@@ -1,0 +1,13 @@
+#[path = "../tooling/locator.rs"]
+mod locator;
+#[path = "../tooling/repository_roots.rs"]
+mod repository_roots;
+#[path = "../repo_index/mod.rs"]
+mod repo_index;
+
+fn main() {
+    if let Err(error) = repo_index::run(std::env::args()) {
+        eprintln!("repo-index: {error:#}");
+        std::process::exit(1);
+    }
+}
