@@ -21,13 +21,13 @@
       "dependencies": [
         {
           "path": "cairn-policy/contracts.ncl",
-          "identity": "b3:5c22cd21061e27413d216716172a15f4c242a1ae67d8b423559eb1a063015a56",
-          "bytes": 15697
+          "identity": "b3:3d23b707abe1b6b53a5031a1115a9b76c8bc8786635b9aba484988df935d34fb",
+          "bytes": 18795
         },
         {
           "path": "cairn-policy/generated/cairn-policy.json",
-          "identity": "b3:0502fecf2ca0a41716048fd51484553d86b68a14e62218aeb3715fb60d886941",
-          "bytes": 162466
+          "identity": "b3:21fbb688ea854d3d7badea3f78dc57a9d274b78e99d4961e6bef8cf57b61adeb",
+          "bytes": 168484
         },
         {
           "path": "policy-contracts/common.ncl",
@@ -41,8 +41,8 @@
       "format": "json",
       "output": {
         "path": "nickel-export-cutover/generated/outputs/cairn-policy-contract.json",
-        "identity": "b3:0502fecf2ca0a41716048fd51484553d86b68a14e62218aeb3715fb60d886941",
-        "bytes": 162466
+        "identity": "b3:21fbb688ea854d3d7badea3f78dc57a9d274b78e99d4961e6bef8cf57b61adeb",
+        "bytes": 168484
       },
       "evaluator": {
         "identity": "github:nickel-lang/nickel@1320a983e6c3d1e2fb53dd2464b084b4903b1426",
@@ -56,5 +56,5 @@
       "non_claim": "Nickel export success proves only exact declared input and output identities under the recorded evaluator descriptor; it does not prove deployability, product-policy conformance, evaluator equivalence, build success, or release eligibility"
     }
   ],
-  "manifest_identity": "b3:b40698948d49c61bd7b1134ddb1de3c8d60015f857c4eb9a49f6edabb564a399"
+  "manifest_identity": "b3:2efbee14f740d1bed93f40794d2fdd7d4feaca836ddb9f1ed7b97a37525b56cf"
 }

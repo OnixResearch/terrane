@@ -20,37 +20,45 @@ The pure Rust checker validates loaded profiles, artifacts, receipts, and manife
 
 The Nix check owns source copying, provider execution, bounded logs, generated files, and process results.
 
-Trellis owns theorem intent, requirement mapping, its receipt, and its cross-verifier manifest.
+Terrane owns theorem intent, requirement mapping, its receipt, and its cross-verifier manifest.
 
 Octet owns the provider package, adequacy policy, compatibility matrix, and consumer contract.
 
 ## Pinned provider
 
-The provider comes from Octet revision `890f424cd7b1b2015f39c0eb5747f1bd1e576028`.
+The provider comes from public [Octet revision `b9b4b4044142820a07dc00332c36e07d1e1c4711`](https://github.com/OnixResearch/octet-public/tree/b9b4b4044142820a07dc00332c36e07d1e1c4711). Historical archived receipts retain their originally measured provider revisions.
 
 The relevant identities are:
 
 - provider profile: `b3:cd11b49d1acede2c6a91fa26f0b7a6b4b28db4007b4601a65b3269706a0ce625`
 - compatibility matrix: `b3:403656d75de41b955cd2493ef289ba17308da65a3d214babc1ea606aeae248f5`
 - consumer contract: `b3:63ea1e9e78916728a4a83719c29a6443a8952dbaadeeaae2a7420365afa7ff07`
-- policy artifact: `b3:cc07811243f39a70c08d80b2d145fbc97596644d56b74284d5f870d93826f605`
+- policy artifact: `b3:f9ce0a9b1dceef17c248677ab7479491b929c3e216a0b71123a86c1f23467914`
 - Aeneas revision: `bc2eb6f941369fa3c695e30598b5758b11e4f0de`
 - Charon revision: `cb50ff16b9f1066b8a97dc06da704de2da2fa41c`
 - Lean toolchain: `leanprover/lean4:v4.31.0`
 
-Trellis keeps its existing Octet Verus pin separate. The Aeneas input cannot change Verus trial authority.
+The pinned public exporter adds only the `octet.cairn-cob-pilot-transport` and
+`octet.cairn-cob-conflict-pilot-transport` configuration-receipt families compared
+with the historical `b3:cc07811243f39a70c08d80b2d145fbc97596644d56b74284d5f870d93826f605`
+artifact. All 70 exported policies are unchanged. Current exact artifact guards
+bind the measured public export; historical receipts keep their original identity.
+
+Terrane keeps its existing Octet Verus pin separate. The Aeneas input cannot change Verus trial authority.
 
 ## Generated boundary
 
 Aeneas-generated files are in `aeneas-pilot/generated/`.
 
-- `llbc.llbc`: `b3:85ad114c09426020bd1c0ba56bc5e71ba301b7552a5f6b0b9219357b671cb872`
+- `llbc.llbc`: `b3:507b8885efe46322abed559e38362d88055d2cb076c28277108dd2111acc66a8`
 - `translation.json`: `b3:c7df4ccc0437a026d9dff206324ff5d42f3cf1c4e8663022cc4cba34ddc536a4`
 - `Llbc.lean`: `b3:4fe6569363d2ffef0075c278a0a49b91ccfb83a9387826927df658a7e5e6644b`
 
 Maintained theorem files are in `aeneas-pilot/theorems/`. Regeneration never writes to that directory.
 
 `translation.json` joins LLBC declaration `def_id` 0 to the generated Lean declaration. This number is only a current-run join key.
+
+The Nix rail first runs `--check-inputs`, which admits the source/profile and generated artifacts but makes no runtime receipt claim. It runs Charon, Aeneas, Lean, the false-theorem probe, and Octet's vacuity/artifact checks before `--write` emits fresh current receipts. Final `--check` and `--self-test` enforce complete linkage and rejection behavior.
 
 The durable run identity uses the three generated artifact identities. It does not use `def_id`.
 
@@ -93,7 +101,7 @@ The positive rail checks both maintained theorems. The negative rail checks dist
 - Lean rejects `FalseTheorem.lean` with an unsolved goal.
 - Lean accepts `VacuousTheorem.lean` as syntax and proof.
 - Octet adequacy rejects that vacuous theorem before proof promotion.
-- The checker runs 18 profile, artifact, trust, receipt, and claim-boundary mutations.
+- The checker runs 18 catalog mutations plus eight public-provider source and identity mutations across profile, artifact, trust, receipt, and claim boundaries.
 - A complete reviewed unsupported observation maps to blocked status.
 - Setup, process, artifact, timeout, and budget errors map to failed status.
 

@@ -29,6 +29,8 @@ let SafeRelativePath = Common.SafeRelativePath in
 let TraceabilityRequirementSourceKind = Common.enum ["accepted_specs", "requirements_doc"] in
 let TraceabilityEvidenceSourceKind = Common.enum ["rust_source", "nickel_source", "tool_source"] in
 let TraceabilityMarkerVerb = Common.enum ["impl", "verify", "depends", "related"] in
+let TraceabilityAssuranceLevel = Common.enum ["declared"] in
+let TraceabilityAnchorKind = Common.enum ["exact_marker_bytes"] in
 let TraceabilityExtension = std.contract.from_predicate (fun value =>
   std.is_string value && std.string.length value > 0 && std.string.is_match "^[A-Za-z0-9_-]+$" value
 ) in
@@ -36,7 +38,7 @@ let StackProvenanceGateMode = Common.enum ["disabled", "optional", "required"] i
 let RuntimeCaptureOrigin = Common.enum ["boundary_captured", "ingested_telemetry", "wrapper_asserted", "unknown"] in
 let PositiveNumber = Common.PositiveNumber in
 let WorkflowPathKind = Common.enum ["file", "spec_directory"] in
-let WorkflowStructuralAdmission = Common.enum ["proposal", "delta_specs", "design", "risk", "tasks", "verification", "semantic_review", "acceptance"] in
+let WorkflowStructuralAdmission = Common.enum ["proposal", "delta_specs", "design", "risk", "tasks", "verification", "semantic_review", "acceptance", "outcome_machine"] in
 let WorkflowSpecEffect = Common.enum ["delta", "full", "none"] in
 let WorkflowTaskLinkClass = Common.enum ["requirement", "acceptance"] in
 let WorkflowState = Common.enum ["done", "ready", "blocked", "skipped"] in
@@ -69,9 +71,46 @@ let surface_integrity = fun policy =>
     Common.all_in surface.required_replay_cases case_ids
     && Common.all_in surface.required_replay_groups group_ids
   ) policy.determinism_surface_inventory in
+let outcome_machine_integrity = fun schema =>
+  let reviews = std.array.filter (fun artifact => artifact.structural_admission == "outcome_machine") schema.artifacts in
+  let dependents = std.array.filter (fun artifact => Common.contains ["design", "tasks"] artifact.id) schema.artifacts in
+  schema.spec_effect == "delta"
+  && schema.task_link_class == "requirement"
+  && std.array.length reviews == 1
+  && std.array.all (fun artifact =>
+    artifact.id == "outcome-machine"
+    && artifact.output_path == "outcome-machine.json"
+    && artifact.path_kind == "file"
+    && artifact.stage == "design"
+    && !artifact.skipped
+  ) reviews
+  && std.array.length dependents == 2
+  && std.array.all (fun artifact => Common.contains artifact.requires "outcome-machine") dependents in
+let workflow_registry_integrity = fun policy =>
+  let schema_ids = Common.ids policy.schemas in
+  let registry = policy.workflow_profile_policy in
+  let outcome_profiles = std.array.filter (fun schema => schema.id == "outcome-machine") policy.schemas in
+  Common.all_in ["spec-driven", "assurance", "no-spec-delta", "outcome-machine"] schema_ids
+  && Common.unique registry.allowed_profiles
+  && Common.all_in registry.allowed_profiles schema_ids
+  && Common.contains registry.allowed_profiles registry.default_profile
+  && Common.unique registry.forbidden_selection_sources
+  && Common.all_in ["user-global", "environment", "agent-prompt", "remote-package"] registry.forbidden_selection_sources
+  && Common.unique (std.array.map (fun mapping => mapping.effect) registry.required_profiles_by_effect)
+  && std.array.all (fun mapping =>
+    std.array.any (fun schema => schema.id == mapping.profile && schema.spec_effect == mapping.effect) policy.schemas
+  ) registry.required_profiles_by_effect
+  && std.array.all outcome_machine_integrity outcome_profiles
+  && Common.unique policy.agent_guidance_policy.known_profiles
+  && Common.all_in schema_ids policy.agent_guidance_policy.known_profiles
+  && Common.unique policy.agent_guidance_policy.known_artifacts
+  && std.array.all (fun schema =>
+    Common.all_in (Common.ids schema.artifacts) policy.agent_guidance_policy.known_artifacts
+  ) policy.schemas in
 let policy_integrity_contract = std.contract.from_predicate (fun policy =>
   Common.ids_unique policy.schemas
   && std.array.all artifact_schema_integrity policy.schemas
+  && workflow_registry_integrity policy
   && Common.ids_unique policy.task_marker_policy.markers
   && Common.unique (std.array.map (fun schema => schema.command) policy.receipt_schemas)
   && std.array.all receipt_schema_integrity policy.receipt_schemas
@@ -130,6 +169,24 @@ let policy_integrity_contract = std.contract.from_predicate (fun policy =>
     receipt_fields | NonEmptyArray | Array NonEmptyString,
     required_non_claims | NonEmptyArray | Array NonEmptyString,
   },
+  WorkflowEffectProfile = {
+    effect | Common.enum ["delta", "none"],
+    profile | NonEmptyString,
+  },
+
+  WorkflowProfilePolicy = {
+    default_profile | NonEmptyString,
+    allowed_profiles | NonEmptyArray | Array NonEmptyString,
+    required_profiles_by_effect | Array WorkflowEffectProfile,
+    forbidden_selection_sources | NonEmptyArray | Array NonEmptyString,
+  },
+
+  AgentGuidancePolicy = {
+    known_profiles | NonEmptyArray | Array NonEmptyString,
+    known_artifacts | NonEmptyArray | Array NonEmptyString,
+    ..
+  },
+
 
   Marker = {
     id | NonEmptyString,
@@ -222,6 +279,8 @@ let policy_integrity_contract = std.contract.from_predicate (fun policy =>
     requirement_sources | NonEmptyArray | Array TraceabilityRequirementSource,
     evidence_sources | NonEmptyArray | Array TraceabilityEvidenceSource,
     marker_verbs | NonEmptyArray | Array TraceabilityMarkerVerb,
+    assurance_level | TraceabilityAssuranceLevel,
+    anchor_kind | TraceabilityAnchorKind,
   },
 
   TraceabilityPolicy = {
@@ -396,6 +455,8 @@ let policy_integrity_contract = std.contract.from_predicate (fun policy =>
     version | SupportedPolicyVersion,
     policy_schema_compatibility | PolicySchemaCompatibility,
     schemas | NonEmptyArray | Array ArtifactSchema,
+    workflow_profile_policy | WorkflowProfilePolicy,
+    agent_guidance_policy | AgentGuidancePolicy,
     lifecycle_stages | NonEmptyArray | Array Stage,
     task_marker_policy | TaskMarkerPolicy,
     gate_policy | GatePolicy,

@@ -1,0 +1,47 @@
+## Decisions
+
+The public Terrane source is an independently derived parentless history. Never push original private history, attach private ancestors, or change original repositories' visibility.
+
+Use separate immutable public Octet revisions for the production verifier and Aeneas provider; retain their reviewed compiler/tool binaries, profile hashes, feature scopes and authority boundaries. Nickel-export's lifecycle input follows an explicitly pinned public Cairn assembly, not a private recursive branch or an incompatible provider alias.
+
+The current UCAN consumer profile names the immutable public Terrane source, exact package/root/license/module identities and proof-manifest identity. The source must pass the configured production Verus profile first. Schema IDs remain versioned protocol identifiers, not rename targets. Current owner/non-claims name Terrane. Historical archives and proof artifacts retain original identities; current generated linkage may be regenerated only through the maintained generators and observed checks.
+
+## Verification and limits
+
+Use anonymous exact Git/Nix source acquisition, actual production Verus execution, positive/negative consumer compatibility, provider pin/profile checks and maintained export generators. Preserve strict rejection of changed digests, revisions, features, modules and non-claims.
+
+The original preserved governing policy lacked the pinned public Cairn CLI's required initial outcome-machine profile. Migrate only the maintained Terrane overlay to the public CLI's workflow/guidance/schema registry and selected-policy receipt contract; retain the byte-identical licensed base and upstream authoring inputs. Run native policy validation and all completion gates before sync/archive.
+
+Re-admit the Aeneas profile at public Octet revision `b9b4b4044142820a07dc00332c36e07d1e1c4711` and the May 17 trial at public production revision `bf633b7ceb6ae2b57eee8e8e53b4f7821337dbd5`. Keep every binary, provider artifact, proof, budget and promotion guard. Aeneas preflight checks inputs without claiming a runtime receipt; receipt generation follows genuine provider, Lean and adequacy execution, then complete linkage validation. Fresh upgrade-trial evidence is not required to equal a July historical archive whose source revision differs; validate its exact current provider and complete promotion receipt instead. Bind the maintained trial's exact proof-count guards to the freshly observed `11142 verified, 0 errors` from both full-library runs, not the July inventory. Historical archives remain unchanged.
+
+The public Aeneas policy export differs only by the two Cairn transport configuration-receipt families; all 70 policies are unchanged. Bind the exact current export identity, not the historical export's digest. Charon's current LLBC differs only in embedded `src/lib.rs` documentation after the public proof-claim correction; its selected function declaration and body are unchanged. Re-measure that generated artifact and require a fresh byte-identical Charon/Aeneas regeneration before current receipt admission. Provider binaries, theorem statements, budgets and historical artifacts remain unchanged.
+
+Repair the Rust documentation and affected Dylint source store objects from their original admitted inputs and derivations. Compare independently rebuilt or anonymously reacquired NAR identities against the original store metadata before restoring any bytes; reject a changed identity instead of rewriting admission hashes. Verify restored content and distributed copying before treating repaired dependency availability as infrastructure evidence; this does not itself pass Octet or product release gates.
+
+## Observed initial source/profile evidence
+
+The independent public source `df99309c31e95b8068d90153e362dad6234d0cca` was fetched over anonymous HTTPS with credentials and global/system Git configuration disabled. Production Verus `0.2026.05.17.e479cce` verified `11142` obligations with `0` errors at the configured `--rlimit 20`; an initial unconfigured default-limit invocation exhausted two resource limits and is not counted as acceptance.
+
+The actual maintained consumer checker passed `39` modules, `42` exact source artifact identities and `10` positive/negative fixtures, plus its self-test. Actual direct-dependency and audited-vendored reports passed; stale immutable revision and obsolete private Trellis repository observations were rejected. An actual Cargo consumer of the immutable public Git revision passed arithmetic, bounds, quorum and drain assertions.
+
+An independent anonymous prefetch measured Crane commit `b556d7bbae5ff86e378451511873dfd07e4504cd` as `sha256-5xsK26KRHf0WytBtsBnQYC/lTWDhQuT57HJ7SzuqZcM=`. The previous root lock declared a different NAR for that same revision. Nix regenerated only that root Crane entry; the revision and intended compiler/verifier cohorts were not advanced.
+
+Fresh anonymous exact Git fetches and strict object-closure checks succeeded for both public Octet cohorts, corrected Cairn, Slotcar, Valence, the audited/current Artifact sources, Bounded Exec, onixpkgs and Nickel-export. Historical Aeneas and May 17 trial profiles/receipts retain their original source identities; they are not relabelled as public-source re-admission.
+
+The repaired Nix production proof rail also passed `11142 verified, 0 errors`. The actual Nix `consumer-release-profile` check passed `39` modules, `42` artifacts, `10` fixtures and its self-test when built locally with remote builders disabled and only the public NixOS substituter enabled. The distributed consumer attempt failed without a retained diagnostic; it is not reported as a profile denial or a pass.
+
+The Octet rail could not complete because the configured distributed builder rejected a Rust documentation store import with conflicting NAR hashes. No toolchain hash, verifier pin or admission guard was weakened. The historical upgrade-trial check failed and the Aeneas check remained dependency-blocked; neither is fresh re-admission evidence.
+
+Final public dependency bundles were restored with their explicit advertised `inspection` ref, passed strict Git integrity checks, and contained exactly their reachable object closure. An initial restore without selecting that ref left `HEAD` unborn; it did not establish restore success. OnixResearch maintainers own these source/profile bindings and the outstanding native lifecycle/provider admission decisions.
+
+## Fresh repair and provider evidence
+
+The original Rust documentation derivation and the Dylint source cohort at `0e0a71eefe6f01563d11acc6e1d7af1d505934a9` were restored without advancing any compiler, verifier or source pin. Independent reacquisition/rebuild matched the original Dylint source NAR `sha256-3OkN9IX1ommW6JZlgOOalz8Zx8tQGNgjaM7LVMYFZVg=`, driver-source NAR `sha256-RlqxXU1aiFot6TQDI+EzWFfK7odTCgqWz3mhWpZ+mO8=` and Cargo-source NAR `sha256-8//NfT9EnapL0SrIM0B+CB6TjjWFsBMtWSaIE4H6fWg=` before restoration. Restored objects passed actual store content verification and distributed import; no admission hash was rewritten.
+
+The maintained policy passed strict native validation with no issues, and native proposal/design gates passed with the explicit selected policy identity `21fbb688ea854d3d7badea3f78dc57a9d274b78e99d4961e6bef8cf57b61adeb`. Nix verification-policy and standalone Nickel-export checks passed, including workflow/authority/anchor rejection fixtures and the export self-test's `12` negative cases. Licensed historical base and authoring inputs remain unchanged.
+
+The fresh May 17 trial passed at public production provider `bf633b7ceb6ae2b57eee8e8e53b4f7821337dbd5`. Baseline and candidate each verified `11142` obligations with `0` errors over the same immutable proof source. Adapted IronKV and allocator proofs and unmodified node-replication proofs passed; adaptation trust-marker counts were preserved and patch mutation was rejected. Paper microcases remain diagnostic-only and the VerusBelt audit remains reference-only. Canonical promotion receipt `3f340eca20216c296ac0f1a828e985430c2cbed23f3cdf0c742503ac0edb2d61` is preserved in Nix output `/nix/store/gs0w0pq3wnhw838hyf28xl2nccfs7awy-trellis-octet-verus-upgrade-trial`; original July archives were not relabelled or edited.
+
+The repaired public-provider Octet rail reached actual linting and failed the existing baseline guard: `4103` warnings, `0` errors, `3867` accepted baseline entries, `0` current accepted findings, `3872` new findings and `3867` stale entries. It is not a pass. The accepted baseline and lint rules were not reset or weakened; source/provider admission does not resolve that separate release-readiness rejection.
+
+The fresh Aeneas rail passed at public provider `b9b4b4044142820a07dc00332c36e07d1e1c4711`. Charon, Aeneas and Lean ran with the retained budgets and network isolation; generated bytes matched exactly. Both maintained theorems and their expected axiom audits passed. The false theorem failed with unsolved goals, and Octet rejected the compiled vacuous theorem for adequacy. Complete linkage and all 18 catalog plus eight provider source/identity mutations passed. Current receipt `b3:d90f9977b0d4abc88cefd8fb0835e77bf05734b65af3a36f8681a4656d3c169f` and manifest `b3:a767a0e0c7bc27de91021c12ef712d0dbde631bb90a3dceef8d3825d1aa95fbc` come from Nix output `/nix/store/mm29is290nzgjdmcgj1g1w4w3iizs4a1-trellis-aeneas-cross-verifier-pilot`; historical receipts remain unchanged.

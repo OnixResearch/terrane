@@ -31,16 +31,18 @@ const RECEIPT_PATH: &str = "aeneas-pilot/generated/aeneas-proof-receipt.json";
 const MANIFEST_PATH: &str = "aeneas-pilot/generated/cross-verifier-manifest.json";
 const MAX_INPUT_BYTES: u64 = 16_777_216;
 const MODE_CHECK: &str = "--check";
+const MODE_CHECK_INPUTS: &str = "--check-inputs";
 const MODE_WRITE: &str = "--write";
 const MODE_SELF_TEST: &str = "--self-test";
 const ROOT_FLAG: &str = "--root";
 const HELP_FLAG: &str = "--help";
 const SHORT_HELP_FLAG: &str = "-h";
-const USAGE: &str = "usage: check-aeneas-cross-verifier.rs [--root PATH] [--check|--write|--self-test]";
+const USAGE: &str = "usage: check-aeneas-cross-verifier.rs [--root PATH] [--check|--check-inputs|--write|--self-test]";
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 enum Mode {
     Check,
+    CheckInputs,
     Write,
     SelfTest,
 }
@@ -72,6 +74,14 @@ fn run() -> Result<String, String> {
         .map_err(|error| format!("canonicalize root `{}`: {error}", options.root.display()))?;
     match options.mode {
         Mode::Write => write_generated(&root),
+        Mode::CheckInputs => {
+            let inputs = load_inputs(&root, false)?;
+            require_clean(validation::validate_base(&inputs))?;
+            Ok(format!(
+                "aeneas cross-verifier inputs admitted: {} theorem mappings; runtime receipt not checked",
+                inputs.profile.theorem_mappings.len()
+            ))
+        }
         Mode::Check => {
             let inputs = load_inputs(&root, true)?;
             require_clean(validation::validate_complete(&inputs))?;
@@ -81,7 +91,7 @@ fn run() -> Result<String, String> {
             let inputs = load_inputs(&root, true)?;
             tests::run(&inputs)?;
             Ok(format!(
-                "aeneas cross-verifier self-test passed: {} positive profile, {} negative cases",
+                "aeneas cross-verifier self-test passed: {} positive profile, {} catalog negative cases, 8 provider source negative cases",
                 inputs.profile.pilot_id,
                 inputs.negative.cases.len()
             ))
@@ -240,6 +250,7 @@ fn parse_args() -> Result<Options, String> {
                 root = PathBuf::from(arguments.get(index).ok_or_else(|| format!("missing value for {ROOT_FLAG}"))?);
             }
             MODE_CHECK => set_mode(&mut mode, Mode::Check)?,
+            MODE_CHECK_INPUTS => set_mode(&mut mode, Mode::CheckInputs)?,
             MODE_WRITE => set_mode(&mut mode, Mode::Write)?,
             MODE_SELF_TEST => set_mode(&mut mode, Mode::SelfTest)?,
             HELP_FLAG | SHORT_HELP_FLAG => return Err(USAGE.to_owned()),

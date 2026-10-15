@@ -15,14 +15,14 @@
       "family_id": "trellis.cairn-policy",
       "source": {
         "path": "cairn-policy/default.ncl",
-        "identity": "b3:de48d93d85bfc17a55467742fd9758c52d183b21d9eaf10317fb6c52cfabb396",
-        "bytes": 2763
+        "identity": "b3:dd1b16ed4c22256385f7f5ad3e87c3ed7535cba49b8e56f8daa2b8ed6aa1c542",
+        "bytes": 5623
       },
       "dependencies": [
         {
           "path": "cairn-policy/contracts.ncl",
-          "identity": "b3:5c22cd21061e27413d216716172a15f4c242a1ae67d8b423559eb1a063015a56",
-          "bytes": 15697
+          "identity": "b3:3d23b707abe1b6b53a5031a1115a9b76c8bc8786635b9aba484988df935d34fb",
+          "bytes": 18795
         },
         {
           "path": "cairn-policy/generated/cairn-policy.base.json",
@@ -41,8 +41,8 @@
       "format": "json",
       "output": {
         "path": "cairn-policy/generated/cairn-policy.json",
-        "identity": "b3:0502fecf2ca0a41716048fd51484553d86b68a14e62218aeb3715fb60d886941",
-        "bytes": 162466
+        "identity": "b3:21fbb688ea854d3d7badea3f78dc57a9d274b78e99d4961e6bef8cf57b61adeb",
+        "bytes": 168484
       },
       "evaluator": {
         "identity": "github:nickel-lang/nickel@1320a983e6c3d1e2fb53dd2464b084b4903b1426",
@@ -56,5 +56,5 @@
       "non_claim": "Nickel export success proves only exact declared input and output identities under the recorded evaluator descriptor; it does not prove deployability, product-policy conformance, evaluator equivalence, build success, or release eligibility"
     }
   ],
-  "manifest_identity": "b3:a4130679519e8206427137ad944fb083cfb4a47757763da27680bdb309ebf80d"
+  "manifest_identity": "b3:a9f9bd74ac0649c246d88a833d59c7f9bc652e62d666d0fd5ca377e131c74347"
 }

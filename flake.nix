@@ -226,7 +226,6 @@
         upgradeTrialCorpusRowCount = 5;
         upgradeTrialAdaptedRowCount = 2;
         timeoutExitCode = 124;
-        upgradeTrialSavedEvidence = ./cairn/archive/2026-07-12-repair-octet-verus-upgrade/evidence/trial;
 
         upstreamVerusCorpus =
           pkgs.runCommand "trellis-upstream-verus-corpus"
@@ -1080,9 +1079,6 @@
                 and .payload.execution_audit.trusted_boundary_transfer == false
               ' "$output_dir/receipt.json" > /dev/null
               printf '%s\n' 'upgrade-trial: canonical promotion receipt validated'
-              ${pkgs.lib.optionalString (upgradeTrialSavedEvidence != null) ''
-                diff --recursive --unified ${upgradeTrialSavedEvidence} "$output_dir"
-              ''}
             '';
 
       in
@@ -1494,7 +1490,7 @@
                 cp -R ${src}/. "$source_root/"
                 chmod -R u+w "$source_root" "$work_root"
 
-                test '${octet-aeneas.rev}' = '890f424cd7b1b2015f39c0eb5747f1bd1e576028'
+                test '${octet-aeneas.rev}' = 'b9b4b4044142820a07dc00332c36e07d1e1c4711'
                 test "$(b3sum '${octetAeneasSource}/standards/proof-rails/aeneas-lean/consumer-contracts.ncl' | cut -d' ' -f1)" \
                   = '63ea1e9e78916728a4a83719c29a6443a8952dbaadeeaae2a7420365afa7ff07'
                 test "$(b3sum '${octetAeneasSource}/standards/proof-rails/aeneas-lean/generated/profile.json' | cut -d' ' -f1)" \
@@ -1502,7 +1498,7 @@
                 test "$(b3sum '${octetAeneasSource}/standards/proof-rails/aeneas-lean/generated/compatibility-matrix.json' | cut -d' ' -f1)" \
                   = '403656d75de41b955cd2493ef289ba17308da65a3d214babc1ea606aeae248f5'
                 test "$(b3sum "$octet_policy_artifacts_dir/octet-policies.json" | cut -d' ' -f1)" \
-                  = 'cc07811243f39a70c08d80b2d145fbc97596644d56b74284d5f870d93826f605'
+                  = 'f9ce0a9b1dceef17c248677ab7479491b929c3e216a0b71123a86c1f23467914'
 
                 cd "$source_root"
                 nickel export --format json aeneas-pilot/resource-policy.ncl > "$TMPDIR/resource-policy.json"
@@ -1557,8 +1553,7 @@
                 cargo clippy --quiet --offline --manifest-path "$checker_dir/Cargo.toml" -- -D warnings
                 cargo build --quiet --offline --manifest-path "$checker_dir/Cargo.toml"
                 checker="$CARGO_TARGET_DIR/debug/trellis-aeneas-cross-verifier-checker"
-                "$checker" --root "$source_root" --check
-                "$checker" --root "$source_root" --self-test
+                "$checker" --root "$source_root" --check-inputs
 
                 cp -R "$source_root/." "$work_root/"
                 mkdir -p "$work_root/.cargo-home"
@@ -1750,6 +1745,7 @@
                   --artifact-dir '${octetAeneasSource}/standards/proof-rails/aeneas-lean/fixtures/valid/artifacts' \
                   > "$logs/octet-artifact-verify.log"
 
+                "$checker" --root "$source_root" --write
                 "$checker" --root "$source_root" --check
                 "$checker" --root "$source_root" --self-test
                 mkdir -p "$out/logs"

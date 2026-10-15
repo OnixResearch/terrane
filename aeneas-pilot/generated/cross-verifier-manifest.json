@@ -3,9 +3,9 @@
   "status": "passed",
   "source_path": "src/arithmetic.rs",
   "source_identity": "b3:3064658eb9d27a1c1c423abbad9e9c8878756594f07a1d01eeb6b3efef4fa8a4",
-  "run_identity": "b3:5384291409feb72a3e6d71d0a0925bd57882dcea88b48cd7135ec354c20a0aff",
+  "run_identity": "b3:7cc1238cc725aa62988873109fba280fd88af0d5e8ce37d9f15a3f650a851500",
   "receipt_path": "aeneas-pilot/generated/aeneas-proof-receipt.json",
-  "receipt_identity": "b3:baa04429d7c1eab4e0a984017f5a29bd02de7ced8aeeebe07bfb003027bcbc04",
+  "receipt_identity": "b3:d90f9977b0d4abc88cefd8fb0835e77bf05734b65af3a36f8681a4656d3c169f",
   "properties": [
     {
       "theorem_id": "trellis.abs-diff.symmetry",
@@ -46,5 +46,5 @@
     "does not prove verifier independence",
     "does not merge Verus and Aeneas proof authority"
   ],
-  "manifest_identity": "b3:1c1ffd9ccbd8c2cd8de455ed4da6b9cc685fd589d0dc5e8c3c007c34046d49f9"
+  "manifest_identity": "b3:a767a0e0c7bc27de91021c12ef712d0dbde631bb90a3dceef8d3825d1aa95fbc"
 }

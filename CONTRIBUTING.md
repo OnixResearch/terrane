@@ -107,17 +107,18 @@ prerequisite for lifecycle changes. Use the exact `inputs.cairn` revision in
 `flake.nix`, install it and ensure `cairn` is on `PATH`;
 `scripts/proof-review-loop.rs` also accepts `CAIRN_BIN`.
 
-The preserved repository policy currently lacks that CLI's required initial
-`outcome-machine` workflow profile. Native gates report this incompatibility;
-do not substitute another policy or claim sync/archive completion. Source-only
-publication does not resolve or waive this lifecycle blocker.
+The maintained overlay includes the pinned CLI's required initial workflow
+profiles and declared-only traceability fields. Its licensed historical base
+remains unchanged. Use the repository policy explicitly; fresh native validation
+and completion gates are still required before sync/archive.
 
 ```bash
-cairn gate proposal <slug> --root .
-cairn gate design <slug> --root .
-cairn gate tasks <slug> --root .
-cairn sync <slug> --root . --execute
-CAIRN_ARCHIVE_DATE=$(date +%F) cairn archive <slug> --root . --execute
+cairn validate --root . --policy cairn-policy/generated/cairn-policy.json --strict
+cairn gate proposal <slug> --root . --policy cairn-policy/generated/cairn-policy.json
+cairn gate design <slug> --root . --policy cairn-policy/generated/cairn-policy.json
+cairn gate tasks <slug> --root . --policy cairn-policy/generated/cairn-policy.json
+cairn sync <slug> --root . --policy cairn-policy/generated/cairn-policy.json --execute
+CAIRN_ARCHIVE_DATE=$(date +%F) cairn archive <slug> --root . --policy cairn-policy/generated/cairn-policy.json --execute
 ```
 
 ## Contribution license

@@ -23,6 +23,39 @@ registry, guidance, collaboration, and receipt policy shapes. The copied
 projection establishes source identity only; it does not transfer Cairn
 correctness, policy soundness, evidence truth, or release authority.
 
+## Current authoring compatibility
+
+The current Terrane overlay targets the independent public
+[Cairn source](https://github.com/OnixResearch/cairn-public) at
+`acb4c3d2cb90b231e07a6b71115c79adde46349c`. It derives an
+`outcome-machine` profile from the historical `spec-driven` profile, retaining
+its bounds, delta-spec requirements, task links, and non-claims. The added
+design-stage `outcome-machine.json` review is required by that profile's design
+and tasks artifacts. The workflow and guidance catalogs admit the new profile;
+the gate receipt field catalog additionally declares `policy_selection`.
+Both maintained traceability profiles explicitly retain `assurance_level = "declared"`
+and `anchor_kind = "exact_marker_bytes"`, as required by the public CLI and the
+historical base. Typed negative fixtures reject missing assurance, verification
+overclaims, and line-number anchors; no marker becomes a verified proof claim.
+
+Only `generated/cairn-policy.json` is regenerated from this current authoring
+overlay. Neither the immutable base projection nor the licensed
+`upstream-source/` blobs are refreshed or relabelled. Existing changes keep
+their selected workflow; adding the required profile does not select it for
+every change or waive any native gate.
+
+Use the pinned public Cairn CLI with the reviewed Nickel cohort to export and
+check the current policy from Terrane's root:
+
+```sh
+cairn policy export --source cairn-policy/default.ncl --output cairn-policy/generated/cairn-policy.json
+cairn policy export --source cairn-policy/default.ncl --output cairn-policy/generated/cairn-policy.json --check
+```
+
+Source export is not native lifecycle acceptance. Fresh native validation,
+proposal/design/tasks gates, and authorized sync/archive remain separate
+requirements; the historical reproduction procedure below is unchanged.
+
 ## Preferred form and checked source import
 
 Cairn authors this policy in Nickel, **not** in generated JSON. At the pinned

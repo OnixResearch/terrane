@@ -7,9 +7,11 @@ const PROFILE_SCHEMA: &str = "trellis-aeneas-cross-verifier-profile/v1";
 const RESOURCE_SCHEMA: &str = "trellis-aeneas-resource-policy/v1";
 const NEGATIVE_SCHEMA: &str = "trellis-aeneas-negative-catalog/v1";
 const EXPECTED_OUTCOME: &str = "supported";
-const EXPECTED_OCTET_REVISION: &str = "890f424cd7b1b2015f39c0eb5747f1bd1e576028";
+const EXPECTED_OCTET_REPOSITORY: &str = "https://github.com/OnixResearch/octet-public";
+const EXPECTED_OCTET_REVISION: &str = "b9b4b4044142820a07dc00332c36e07d1e1c4711";
+const EXPECTED_CONTRACT_PATH: &str = "standards/proof-rails/aeneas-lean/consumer-contracts.ncl";
 const EXPECTED_CONTRACT_IDENTITY: &str = "b3:63ea1e9e78916728a4a83719c29a6443a8952dbaadeeaae2a7420365afa7ff07";
-const EXPECTED_POLICY_IDENTITY: &str = "b3:cc07811243f39a70c08d80b2d145fbc97596644d56b74284d5f870d93826f605";
+const EXPECTED_POLICY_IDENTITY: &str = "b3:f9ce0a9b1dceef17c248677ab7479491b929c3e216a0b71123a86c1f23467914";
 const EXPECTED_PROVIDER_IDENTITY: &str = "b3:cd11b49d1acede2c6a91fa26f0b7a6b4b28db4007b4601a65b3269706a0ce625";
 const EXPECTED_COMPATIBILITY_IDENTITY: &str = "b3:403656d75de41b955cd2493ef289ba17308da65a3d214babc1ea606aeae248f5";
 const EXPECTED_SOURCE_PATH: &str = "src/arithmetic.rs";
@@ -38,7 +40,9 @@ fn validate_profile(inputs: &Inputs, diagnostics: &mut Vec<String>) {
         diagnostics.push("profile schema or supported outcome drifted".to_owned());
     }
     let octet = &profile.octet_source;
-    if octet.revision != EXPECTED_OCTET_REVISION
+    if octet.repository != EXPECTED_OCTET_REPOSITORY
+        || octet.revision != EXPECTED_OCTET_REVISION
+        || octet.consumer_contract_path != EXPECTED_CONTRACT_PATH
         || octet.consumer_contract_identity != EXPECTED_CONTRACT_IDENTITY
         || octet.policy_artifact_identity != EXPECTED_POLICY_IDENTITY
         || octet.provider_profile_identity != EXPECTED_PROVIDER_IDENTITY

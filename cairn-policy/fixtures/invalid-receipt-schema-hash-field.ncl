@@ -1,8 +1,9 @@
 let Contracts = import "../contracts.ncl" in
-(import "../default.ncl") & {
-  receipt_schemas = [{
-    command = "fixture",
-    top_level_keys = ["command", "receipt_hash"],
-    hash_fields = ["missing_hash_field"],
-  }],
-} | Contracts.Policy | Contracts.PolicyIntegrity
+let Policy = import "../default.ncl" in
+((std.record.remove "receipt_schemas" Policy) & {
+  receipt_schemas | force = std.array.map (fun schema =>
+    if schema.command == "gate" then schema & {
+      hash_fields | force = ["missing_hash_field"],
+    } else schema
+  ) Policy.receipt_schemas,
+}) | Contracts.Policy | Contracts.PolicyIntegrity

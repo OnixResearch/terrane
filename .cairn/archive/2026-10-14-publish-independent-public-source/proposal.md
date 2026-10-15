@@ -8,6 +8,9 @@ Terrane's reviewed independent source has no private Git ancestry, but its opera
 - Replace the stale private Trellis consumer profile with a newly measured public Terrane profile only after verifying its immutable source.
 - Update current provider source bindings and deterministic projections coherently. Preserve historical archives, raw proof artifacts, license grants and signed fixture identities.
 - Exercise actual proof, consumer-compatibility and anonymous-fetch paths. Record failed or unavailable lifecycle/release gates without bypassing them.
+- Migrate the maintained Cairn overlay to the pinned public CLI's outcome-machine registry while leaving licensed historical policy inputs unchanged.
+- Re-admit current Aeneas and May 17 upgrade-trial profiles through genuine public-provider execution; preserve historical receipts and remove only obsolete historical replay coupling.
+- Repair the conflicted Rust documentation store object from its original pinned derivation; do not change compiler or verifier pins.
 
 ## Impact
 

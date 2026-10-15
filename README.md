@@ -31,11 +31,18 @@ to public source snapshots; the UCAN-facing profile binds an anonymously fetched
 immutable Terrane source. Source availability and profile alignment do not confer
 downstream correctness or release eligibility.
 
-Historical Aeneas and May 17 upgrade-trial profiles/receipts retain their original
-provider revisions. Their strict current-source re-admission remains pending;
-the full Nix rail must not be described as green from a source publication.
-The preserved Cairn policy also lacks the public CLI's required initial
-`outcome-machine` workflow profile, so native sync/archive remain blocked.
+Current Aeneas and May 17 upgrade-trial profiles have been re-admitted against
+their exact public providers through fresh proofs, negative controls, and current
+receipt linkage. Historical archived receipts retain their original identities.
+The maintained Cairn overlay passed the pinned public CLI's native validation and
+proposal/design/tasks gates; specification sync and archive completed for the
+[public-source change](.cairn/archive/2026-10-14-publish-independent-public-source/).
+These lifecycle receipts do not establish proof or product release admission.
+
+The public-provider Octet run reaches actual linting but rejects the maintained
+baseline: `4103` warnings, `3872` new findings and `0` currently accepted findings.
+The accepted baseline and lint policy remain unchanged; resolving that rejection
+is a separate release-readiness requirement, not a source-availability claim.
 
 ## Usage
 

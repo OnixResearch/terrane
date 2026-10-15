@@ -13407,7 +13407,7 @@ Closeout MUST pass focused tests, property tests, full Verus, Tracey, proof evid
 ## Aeneas Cross-Verifier Pilot
 
 r[trellis.aeneas_cross_verifier.provider_consumption]
-The pilot MUST consume Octet revision `890f424cd7b1b2015f39c0eb5747f1bd1e576028`. It MUST bind the reviewed provider, policy, compatibility, and consumer-contract identities.
+The pilot MUST consume public Octet Aeneas revision `b9b4b4044142820a07dc00332c36e07d1e1c4711`. It MUST bind the reviewed provider, policy, compatibility, and consumer-contract identities.
 
 r[trellis.aeneas_cross_verifier.exact_source]
 The pilot MUST select `src/arithmetic.rs::abs_diff` from normal Cargo macro erasure. It MUST reject copied or rewritten proof targets.

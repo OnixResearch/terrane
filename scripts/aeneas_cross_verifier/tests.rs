@@ -14,6 +14,7 @@ pub(crate) fn run(inputs: &Inputs) -> Result<(), String> {
         return Err(format!("positive checker fixture failed: {}", valid_diagnostics.join("; ")));
     }
     classifier_cases()?;
+    provider_source_cases(inputs)?;
     for case in &inputs.negative.cases {
         let mut mutated = inputs.clone();
         apply_mutation(&case.id, &mut mutated)?;
@@ -25,6 +26,39 @@ pub(crate) fn run(inputs: &Inputs) -> Result<(), String> {
                 case.expected_diagnostic,
                 diagnostics.join("; ")
             ));
+        }
+    }
+    Ok(())
+}
+
+fn provider_source_cases(inputs: &Inputs) -> Result<(), String> {
+    let mut mutated = inputs.clone();
+    for (field, value) in [
+        ("repository", "https://github.com/OnixResearch/octet"),
+        ("revision", "890f424cd7b1b2015f39c0eb5747f1bd1e576028"),
+        ("revision", "0000000000000000000000000000000000000000"),
+        ("consumer_contract_path", "fixtures/consumer-contracts.ncl"),
+        ("consumer_contract_identity", DRIFT_IDENTITY),
+        ("policy_artifact_identity", DRIFT_IDENTITY),
+        ("provider_profile_identity", DRIFT_IDENTITY),
+        ("compatibility_matrix_identity", DRIFT_IDENTITY),
+    ] {
+        mutated.profile.octet_source = inputs.profile.octet_source.clone();
+        let source = &mut mutated.profile.octet_source;
+        match field {
+            "repository" => source.repository = value.to_owned(),
+            "revision" => source.revision = value.to_owned(),
+            "consumer_contract_path" => source.consumer_contract_path = value.to_owned(),
+            "consumer_contract_identity" => source.consumer_contract_identity = value.to_owned(),
+            "policy_artifact_identity" => source.policy_artifact_identity = value.to_owned(),
+            "provider_profile_identity" => source.provider_profile_identity = value.to_owned(),
+            "compatibility_matrix_identity" => source.compatibility_matrix_identity = value.to_owned(),
+            _ => return Err(format!("unknown provider source field `{field}`")),
+        }
+        let mut diagnostics = Vec::new();
+        super::profile_validation::validate(&mutated, &mut diagnostics);
+        if !diagnostics.iter().any(|diagnostic| diagnostic == "provider identity or pinned Octet contract drifted") {
+            return Err(format!("altered provider source `{field}={value}` was admitted"));
         }
     }
     Ok(())

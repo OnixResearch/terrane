@@ -24,7 +24,7 @@ The profile covers these output families:
 - one YAML lifecycle output and its compatibility destination;
 - five JSON artifact-contract outputs.
 
-The checker compares nine outputs by exact bytes and BLAKE3 identity. It also compares 31 existing invalid fixtures by failure class and normalized diagnostic text.
+The checker compares nine outputs by exact bytes and BLAKE3 identity. It also compares 38 invalid fixtures by failure class and normalized diagnostic text, including workflow admission and declared-only traceability boundaries.
 
 Nickel diagnostics can contain process-local `0x…` closure addresses. The checker removes only those addresses before it compares the diagnostic text.
 

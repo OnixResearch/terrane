@@ -4,7 +4,7 @@
 # r[impl trellis.aeneas_cross_verifier.theorem_map]
 # r[impl trellis.aeneas_cross_verifier.theorem_adequacy]
 let Contracts = import "contracts.ncl" in
-let OctetRevision = "890f424cd7b1b2015f39c0eb5747f1bd1e576028" in
+let OctetRevision = "b9b4b4044142820a07dc00332c36e07d1e1c4711" in
 let ProviderIdentity = "b3:cd11b49d1acede2c6a91fa26f0b7a6b4b28db4007b4601a65b3269706a0ce625" in
 let CompatibilityIdentity = "b3:403656d75de41b955cd2493ef289ba17308da65a3d214babc1ea606aeae248f5" in
 let ConsumerContractIdentity = "b3:63ea1e9e78916728a4a83719c29a6443a8952dbaadeeaae2a7420365afa7ff07" in
@@ -17,7 +17,7 @@ let SourceEndLine = 25 in
 let ProviderTimeoutMilliseconds = 900000 in
 let RetainedLogBytes = 1048576 in
 let PointerWidthBytes = 8 in
-let LlbcBytes = 76688 in
+let LlbcBytes = 76766 in
 let TranslationBytes = 632 in
 let GeneratedLeanBytes = 748 in
 let SymmetryBytes = 495 in
@@ -87,11 +87,11 @@ let ConsumerTheorems = [
   pilot_id = "trellis.abs-diff.aeneas-cross-verifier-v1",
   outcome = "supported",
   octet_source = {
-    repository = "https://github.com/OnixResearch/octet",
+    repository = "https://github.com/OnixResearch/octet-public",
     revision = OctetRevision,
     consumer_contract_path = "standards/proof-rails/aeneas-lean/consumer-contracts.ncl",
     consumer_contract_identity = ConsumerContractIdentity,
-    policy_artifact_identity = "b3:cc07811243f39a70c08d80b2d145fbc97596644d56b74284d5f870d93826f605",
+    policy_artifact_identity = "b3:f9ce0a9b1dceef17c248677ab7479491b929c3e216a0b71123a86c1f23467914",
     provider_profile_identity = ProviderIdentity,
     compatibility_matrix_identity = CompatibilityIdentity,
   },
@@ -177,7 +177,7 @@ let ConsumerTheorems = [
     identity = ResourceIdentity,
   },
   artifacts = [
-    { role = "llbc", path = "aeneas-pilot/generated/llbc.llbc", bytes = LlbcBytes, blake3 = "b3:85ad114c09426020bd1c0ba56bc5e71ba301b7552a5f6b0b9219357b671cb872" },
+    { role = "llbc", path = "aeneas-pilot/generated/llbc.llbc", bytes = LlbcBytes, blake3 = "b3:507b8885efe46322abed559e38362d88055d2cb076c28277108dd2111acc66a8" },
     { role = "translation-manifest", path = "aeneas-pilot/generated/translation.json", bytes = TranslationBytes, blake3 = "b3:c7df4ccc0437a026d9dff206324ff5d42f3cf1c4e8663022cc4cba34ddc536a4" },
     { role = "generated-lean", path = "aeneas-pilot/generated/Llbc.lean", bytes = GeneratedLeanBytes, blake3 = "b3:4fe6569363d2ffef0075c278a0a49b91ccfb83a9387826927df658a7e5e6644b" },
     { role = "symmetry-theorem", path = "aeneas-pilot/theorems/AbsDiffSymmetric.lean", bytes = SymmetryBytes, blake3 = SymmetryIdentity },

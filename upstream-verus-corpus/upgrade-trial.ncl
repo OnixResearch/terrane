@@ -7,18 +7,18 @@ let maximum_saved_log_bytes_value = 65536 in
   baseline = {
     verifier = "verus@0.2026.03.22.5e66329",
     expected_result = "passed",
-    expected_verified_count = 10712,
+    expected_verified_count = 11142,
     expected_error_count = 0,
   },
   candidate = {
     provider = "octet",
-    provider_revision = "374bd16b26cee2af34211a29bfa531c016811f51",
+    provider_revision = "bf633b7ceb6ae2b57eee8e8e53b4f7821337dbd5",
     profile_id = "octet-verus-0.2026.05.17.e479cce",
     verifier = "verus@0.2026.05.17.e479cce",
     expected_result = "passed",
-    expected_verified_count = 10712,
+    expected_verified_count = 11142,
     expected_error_count = 0,
-    result_anchors = ["verification results:: 10712 verified, 0 errors"],
+    result_anchors = ["verification results:: 11142 verified, 0 errors"],
   },
   rows = [
     {
