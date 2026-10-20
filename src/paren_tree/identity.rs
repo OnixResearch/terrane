@@ -23,12 +23,12 @@ pub use equivalence::check_roundtrip;
 pub use model::Atom;
 pub use model::Budget;
 pub use model::FailureClass;
-pub use model::Measures;
-pub use model::Rejection;
-pub use model::Value;
 pub use model::MAX_NESTING_DEPTH;
 pub use model::MAX_NODE_COUNT;
 pub use model::MAX_TEXT_BYTES;
+pub use model::Measures;
+pub use model::Rejection;
+pub use model::Value;
 pub use reader::parse_canonical;
 
 #[cfg(test)]

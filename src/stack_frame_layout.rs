@@ -10,6 +10,8 @@
 use vstd::arithmetic::div_mod::lemma_fundamental_div_mod;
 #[cfg(verus_keep_ghost)]
 use vstd::arithmetic::div_mod::lemma_mod_pos_bound;
+#[cfg(verus_keep_ghost)]
+use vstd::arithmetic::div_mod::lemma_small_mod;
 use vstd::prelude::*;
 
 verus! {
@@ -462,11 +464,26 @@ pub fn empty_frame(stack_alignment: u32) -> (result: Option<FrameLayout>)
     if stack_alignment == 0 {
         None
     } else {
-        Some(FrameLayout {
+        let layout = FrameLayout {
             slots: Vec::new(),
             frame_size: 0u32,
             stack_alignment,
-        })
+        };
+        proof {
+            lemma_small_mod(0, stack_alignment as nat);
+            assert(layout.slots@.len() == 0);
+            assert(aligned_slots_from_spec(layout.slots@, 0));
+            assert(max_slot_end_from_spec(layout.slots@, 0) == 0);
+            assert(frame_size_spec(layout.slots@, stack_alignment) == Some(0u32));
+            assert forall|i: int| #![trigger layout.slots@[i]]
+                0 <= i < layout.slots@.len()
+                implies slot_end_spec(layout.slots@[i]) <= layout.frame_size as int by {
+                assert(false);
+            }
+            assert(alignment_invariant_spec(layout));
+            assert(growth_invariant_spec(layout));
+        }
+        Some(layout)
     }
 }
 

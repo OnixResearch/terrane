@@ -13,6 +13,8 @@
 use vstd::arithmetic::div_mod::lemma_div_is_ordered;
 #[cfg(verus_keep_ghost)]
 use vstd::arithmetic::div_mod::lemma_fundamental_div_mod;
+#[cfg(verus_keep_ghost)]
+use vstd::arithmetic::div_mod::lemma_mod_multiples_basic;
 use vstd::prelude::*;
 
 verus! {
@@ -175,11 +177,7 @@ proof fn slot_address_aligned(index: u64, base: u64, slot_size: u64)
         slot_address_spec(index, base, slot_size), base, slot_size,
     )
 {
-    let addr = base as int + index as int * slot_size as int;
-    let ss = slot_size as int;
-    // addr - base == index * slot_size, so (addr - base) % slot_size == 0
-    assert((index as int * ss) % ss == 0) by(nonlinear_arith)
-        requires ss > 0;
+    lemma_mod_multiples_basic(index as int, slot_size as int);
 }
 
 // r[verify slab.slot-address]

@@ -1528,9 +1528,9 @@ mod tests {
         };
         let dom = crate::dominator_tree::compute_dominators(&program.edges, program.blocks.len(), 0);
         let with_phis = place_phis(&program, &dom);
-        assert!(with_phis.blocks[0].phis.is_empty());
-        assert!(with_phis.blocks[1].phis.is_empty());
-        assert!(with_phis.blocks[2].phis.is_empty());
+        assert_eq!(with_phis.blocks[0].phis.len(), 0);
+        assert_eq!(with_phis.blocks[1].phis.len(), 0);
+        assert_eq!(with_phis.blocks[2].phis.len(), 0);
         assert_eq!(phi_vars_at(&with_phis, 3), BTreeSet::from([0u32]));
         let phi = &with_phis.blocks[3].phis[0];
         assert_eq!(phi.args.len(), 2);

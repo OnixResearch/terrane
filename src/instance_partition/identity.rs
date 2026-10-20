@@ -22,6 +22,7 @@ pub use model::FailureClass;
 pub use model::Item;
 pub use model::ItemKey;
 pub use model::ItemKind;
+pub use model::MAX_ITEMS;
 pub use model::Origin;
 pub use model::Record;
 pub use model::Reference;
@@ -30,7 +31,6 @@ pub use model::Stability;
 pub use model::Table;
 pub use model::Unit;
 pub use model::UnitKey;
-pub use model::MAX_ITEMS;
 
 #[cfg(test)]
 mod tests;

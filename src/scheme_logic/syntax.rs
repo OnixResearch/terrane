@@ -284,7 +284,11 @@ pub fn admit_reader(envelope: &ReaderEnvelope) -> Result<(), ReaderFaultSite> {
     validate_tokens(envelope)?;
     validate_pairs(envelope)?;
     validate_attachments(envelope)?;
-    if let Some(index) = envelope.child_spans.iter().position(|relation| !relation_contains(*relation, envelope.source_length)) {
+    if let Some(index) = envelope
+        .child_spans
+        .iter()
+        .position(|relation| !relation_contains(*relation, envelope.source_length))
+    {
         return reject(ReaderFault::ChildOutsideParent, position(index));
     }
     Ok(())

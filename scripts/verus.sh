@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
-# Run Trellis proofs with Octet's published production Verus package.
+# Run Terrane proofs with the pinned Verus package.
 # Usage: ./scripts/verus.sh [file.rs] [extra args...]
 # Default file: src/lib.rs
 set -euo pipefail
 
 COMMAND_NOT_FOUND_EXIT_CODE=127
-VERUS_EDITION=2021
+VERUS_EDITION=2024
+MACRO_EXTENSION=so
+if [ "$(uname -s)" = Darwin ]; then
+  MACRO_EXTENSION=dylib
+fi
 
 if [ "$#" -gt 0 ]; then
   FILE="$1"
@@ -25,15 +29,15 @@ if [ -z "${VERUS_ROOT:-}" ]; then
   VERUS_ROOT="$(nix build .#verus --no-link --print-out-paths)"
 fi
 
-if [ -x "$VERUS_ROOT/bin/octet-production-verus" ]; then
-  VERUS_BIN="$VERUS_ROOT/bin/octet-production-verus"
+if [ -x "$VERUS_ROOT/bin/terrane-verus" ]; then
+  VERUS_BIN="$VERUS_ROOT/bin/terrane-verus"
   VERUS_LIB_ROOT="$VERUS_ROOT/libexec/verus"
-elif [ -x "$VERUS_ROOT/rust_verify" ]; then
-  VERUS_BIN="$VERUS_ROOT/rust_verify"
+elif [ -x "$VERUS_ROOT/verus" ]; then
+  VERUS_BIN="$VERUS_ROOT/verus"
   VERUS_LIB_ROOT="$VERUS_ROOT"
 else
-  echo "production Verus not found under $VERUS_ROOT" >&2
-  echo "Set VERUS_ROOT to the Octet package or a compatible unpacked Verus root." >&2
+  echo "pinned Verus not found under $VERUS_ROOT" >&2
+  echo "Set VERUS_ROOT to the pinned package or its unpacked Verus root." >&2
   exit "$COMMAND_NOT_FOUND_EXIT_CODE"
 fi
 
@@ -46,9 +50,9 @@ fi
 exec "$VERUS_BIN" \
   --crate-type=lib \
   --extern vstd="$VERUS_LIB_ROOT/libvstd.rlib" \
-  --extern builtin="$VERUS_LIB_ROOT/libverus_builtin.rlib" \
-  --extern builtin_macros="$VERUS_LIB_ROOT/libverus_builtin_macros.so" \
-  --extern state_machines_macros="$VERUS_LIB_ROOT/libverus_state_machines_macros.so" \
+  --extern verus_builtin="$VERUS_LIB_ROOT/libverus_builtin.rlib" \
+  --extern verus_builtin_macros="$VERUS_LIB_ROOT/libverus_builtin_macros.$MACRO_EXTENSION" \
+  --extern verus_state_machines_macros="$VERUS_LIB_ROOT/libverus_state_machines_macros.$MACRO_EXTENSION" \
   -L "$VERUS_LIB_ROOT" \
   --edition "$VERUS_EDITION" \
   "$FILE" "$@"

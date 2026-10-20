@@ -18,8 +18,8 @@ verus! {
 
 // r[depends alloc-bitmap.handle-pack]
 /// Spec: pack slot index (low 32 bits) and generation (high 32 bits).
-pub open spec fn handle_pack_spec(slot: u32, gen: u32) -> u64 {
-    (slot as u64) | ((gen as u64) << 32u64)
+pub open spec fn handle_pack_spec(slot: u32, generation: u32) -> u64 {
+    (slot as u64) | ((generation as u64) << 32u64)
 }
 
 // r[impl alloc-bitmap.handle-pack]
@@ -280,8 +280,8 @@ pub open spec fn bitmap_free_spec(
     recommends map.len() == gens.len()
 {
     let slot = handle_unpack_slot_spec(handle) as int;
-    let gen = handle_unpack_gen_spec(handle);
-    if slot < 0 || slot >= map.len() || !map[slot] || gens[slot] != gen {
+    let generation = handle_unpack_gen_spec(handle);
+    if slot < 0 || slot >= map.len() || !map[slot] || gens[slot] != generation {
         (false, map, gens)
     } else {
         (true, map.update(slot, false), gens)
@@ -322,19 +322,19 @@ pub fn bitmap_free(
 
 // r[verify alloc-bitmap.handle-pack]
 /// Handle pack/unpack roundtrip for slot.
-proof fn handle_roundtrip_slot(slot: u32, gen: u32)
-    ensures handle_unpack_slot_spec(handle_pack_spec(slot, gen)) == slot
+proof fn handle_roundtrip_slot(slot: u32, generation: u32)
+    ensures handle_unpack_slot_spec(handle_pack_spec(slot, generation)) == slot
 {
-    assert(((slot as u64 | ((gen as u64) << 32u64)) & 0xFFFF_FFFFu64) as u32 == slot)
+    assert(((slot as u64 | ((generation as u64) << 32u64)) & 0xFFFF_FFFFu64) as u32 == slot)
         by(bit_vector);
 }
 
 // r[verify alloc-bitmap.handle-pack]
 /// Handle pack/unpack roundtrip for generation.
-proof fn handle_roundtrip_gen(slot: u32, gen: u32)
-    ensures handle_unpack_gen_spec(handle_pack_spec(slot, gen)) == gen
+proof fn handle_roundtrip_gen(slot: u32, generation: u32)
+    ensures handle_unpack_gen_spec(handle_pack_spec(slot, generation)) == generation
 {
-    assert((((slot as u64 | ((gen as u64) << 32u64)) >> 32u64) & 0xFFFF_FFFFu64) as u32 == gen)
+    assert((((slot as u64 | ((generation as u64) << 32u64)) >> 32u64) & 0xFFFF_FFFFu64) as u32 == generation)
         by(bit_vector);
 }
 

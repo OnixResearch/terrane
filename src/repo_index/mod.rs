@@ -8,9 +8,6 @@ use anyhow::Context;
 use anyhow::Result;
 use anyhow::anyhow;
 use anyhow::bail;
-use crate::locator::RelativeLocator;
-use crate::repository_roots::IndexDatabaseRoot;
-use crate::repository_roots::RepositoryRoot;
 pub use model::Blake3DigestHex;
 pub use model::Blake3DigestHexError;
 pub use model::DEFAULT_DB_PATH;
@@ -25,6 +22,10 @@ pub use model::RequirementIdError;
 use model::RequirementQueryResult;
 pub use store::RefreshOptions;
 pub use store::RepoIndex;
+
+use crate::locator::RelativeLocator;
+use crate::repository_roots::IndexDatabaseRoot;
+use crate::repository_roots::RepositoryRoot;
 
 // r[impl repo-index.query]
 pub fn run<I>(args: I) -> Result<()>

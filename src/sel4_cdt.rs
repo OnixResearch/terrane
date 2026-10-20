@@ -192,6 +192,28 @@ proof fn revoke_preserves_live_parent(cdt: Cdt, target: int, node: int)
     }
 }
 
+proof fn revoke_preserves_live_parents(cdt: Cdt, target: int)
+    requires
+        cdt.wf(),
+        0 <= target < cdt.parents@.len(),
+        cdt.present@[target],
+    ensures
+        forall|j: int| 0 <= j < cdt.parents@.len()
+            && #[trigger] revoke_present_spec(cdt, target)[j] ==> match cdt.parents@[j] {
+                None => true,
+                Some(p) => p < cdt.present@.len() && revoke_present_spec(cdt, target)[p as int],
+            },
+{
+    assert forall|j: int| 0 <= j < cdt.parents@.len()
+        && #[trigger] revoke_present_spec(cdt, target)[j] implies match cdt.parents@[j] {
+            None => true,
+            Some(p) => p < cdt.present@.len() && revoke_present_spec(cdt, target)[p as int],
+        } by {
+        assert(cdt.present@[j]);
+        revoke_preserves_live_parent(cdt, target, j);
+    }
+}
+
 proof fn recycle_preserves_live_parent(cdt: Cdt, node: int, j: int)
     requires
         cdt.wf(),
@@ -408,6 +430,9 @@ pub fn revoke(cdt: &mut Cdt, target: usize) -> (result: bool)
     let mut i: usize = 0;
     while i < len
         invariant
+            old_cdt.wf(),
+            target < old_cdt.parents@.len(),
+            old_cdt.present@[target as int],
             cdt.parents@ =~= old_cdt.parents@,
             cdt.slots@ =~= old_cdt.slots@,
             cdt.present@.len() == len as int,
@@ -441,14 +466,8 @@ pub fn revoke(cdt: &mut Cdt, target: usize) -> (result: bool)
         i = i + 1;
     }
     proof {
-        assert forall|j: int| 0 <= j < cdt.parents@.len() && cdt.present@[j] implies match cdt.parents@[j] {
-            None => true,
-            Some(p) => p < cdt.present@.len() && cdt.present@[p as int],
-        } by {
-            assert(cdt.present@[j] == revoke_present_spec(old_cdt, target as int)[j]);
-            revoke_preserves_live_parent(old_cdt, target as int, j);
-        }
         assert(cdt.present@ =~= revoke_present_spec(old_cdt, target as int));
+        revoke_preserves_live_parents(old_cdt, target as int);
     }
     true
 }

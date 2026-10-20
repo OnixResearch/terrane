@@ -1449,8 +1449,8 @@ mod tests {
         assert_eq!(state.endpoints[0].senders.len(), 1);
         assert_eq!(state.endpoints[0].senders[0].tcb, 0);
         assert_eq!(state.endpoints[0].senders[0].badge, 99);
-        assert!(state.endpoints[0].receivers.is_empty());
-        assert!(state.ready_queues.queues[0].is_empty());
+        assert_eq!(state.endpoints[0].receivers.len(), 0);
+        assert_eq!(state.ready_queues.queues[0].len(), 0);
     }
 
     // r[verify sel4-invariants.step-preservation]
@@ -1477,7 +1477,7 @@ mod tests {
         assert_eq!(matched.receiver, 1);
         assert_eq!(matched.badge, 77);
         assert!(matches!(state.tcbs[1].state, TcbState::Runnable));
-        assert!(state.endpoints[0].receivers.is_empty());
+        assert_eq!(state.endpoints[0].receivers.len(), 0);
         assert_eq!(state.ready_queues.queues[1], vec![1]);
     }
 

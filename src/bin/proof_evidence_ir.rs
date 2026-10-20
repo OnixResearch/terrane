@@ -218,7 +218,10 @@ fn receipt_identity(receipt: &VerifierReceipt) -> String {
 
 fn assumptions_identity(assumptions: &Assumptions) -> String {
     let payload = canonical_object(vec![
-        ("trusted_boundaries".to_string().as_str(), json_array(sorted_strings(&assumptions.trusted_boundaries))),
+        (
+            "trusted_boundaries".to_string().as_str(),
+            json_array(sorted_strings(&assumptions.trusted_boundaries)),
+        ),
         ("external_bodies".to_string().as_str(), json_array(sorted_strings(&assumptions.external_bodies))),
         ("proof_gaps".to_string().as_str(), json_array(sorted_strings(&assumptions.proof_gaps))),
         ("dependencies".to_string().as_str(), json_array(sorted_strings(&assumptions.dependencies))),
@@ -457,10 +460,7 @@ fn validate_handoff(record: &IrRecord, errors: &mut Vec<String>) {
 fn validate_ir_chain(chain: &IrChain, expected_requirements: &BTreeSet<String>) -> Vec<String> {
     let mut errors = Vec::new();
     if chain.schema_version != SCHEMA_VERSION {
-        errors.push(format!(
-            "unsupported schema `{}`; expected `{SCHEMA_VERSION}`",
-            chain.schema_version
-        ));
+        errors.push(format!("unsupported schema `{}`; expected `{SCHEMA_VERSION}`", chain.schema_version));
         return errors;
     }
     if chain.generated_by.is_empty() {
@@ -481,10 +481,7 @@ fn validate_ir_chain(chain: &IrChain, expected_requirements: &BTreeSet<String>) 
 /// Derives typed assumptions from the proof-gap manifest rows for the given
 /// source paths. Trusted permanent boundaries become trusted_boundaries;
 /// other classified gaps stay as proof_gaps.
-fn assumptions_from_gaps(
-    gap_references: &[String],
-    gap_classifications: &[(String, String)],
-) -> Assumptions {
+fn assumptions_from_gaps(gap_references: &[String], gap_classifications: &[(String, String)]) -> Assumptions {
     let mut trusted_boundaries = Vec::new();
     let mut proof_gaps = Vec::new();
     for reference in gap_references {
@@ -556,9 +553,8 @@ fn parse_gap_classifications(tsv: &str) -> Vec<(String, String)> {
 }
 
 fn command_identity(proof_command: &str) -> String {
-    let payload = canonical_object(vec![
-        ("proof_command".to_string().as_str(), Value::String(proof_command.to_string())),
-    ]);
+    let payload =
+        canonical_object(vec![("proof_command".to_string().as_str(), Value::String(proof_command.to_string()))]);
     blake3_hex(&canonical_json_bytes(&payload))
 }
 
@@ -642,11 +638,7 @@ fn generate_ir_chain(bundle: &ProofBundle, gap_classifications: &[(String, Strin
         schema_version: SCHEMA_VERSION.to_string(),
         generated_by: GENERATOR_PATH.to_string(),
         source_bundle_path: BUNDLE_PATH.to_string(),
-        records: bundle
-            .records
-            .iter()
-            .map(|record| record_for_bundle(record, gap_classifications))
-            .collect(),
+        records: bundle.records.iter().map(|record| record_for_bundle(record, gap_classifications)).collect(),
     }
 }
 
@@ -698,9 +690,7 @@ fn run_check(root: &Path) -> Result<(), String> {
     let expected_text = sorted_json(&expected)?;
     let actual_text = read_text(&root.join(IR_CHAIN_PATH), IR_CHAIN_PATH)?;
     if actual_text != expected_text {
-        return Err(format!(
-            "{IR_CHAIN_PATH} is stale; run `cargo run --quiet --bin proof_evidence_ir -- write`"
-        ));
+        return Err(format!("{IR_CHAIN_PATH} is stale; run `cargo run --quiet --bin proof_evidence_ir -- write`"));
     }
     let chain: IrChain =
         serde_json::from_str(&actual_text).map_err(|error| format!("invalid IR chain JSON: {error}"))?;
@@ -785,14 +775,8 @@ fn positive_fixture_chain() -> IrChain {
     let source_identities = fixture_source_identities();
     let chain_id = chain_identity(&source_identities, &ir_identity, &receipt, &assumptions);
     let non_claims: Vec<String> = REQUIRED_NON_CLAIMS.iter().map(|claim| (*claim).to_string()).collect();
-    let handoff = kamacite_handoff(
-        &requirements,
-        &source_identities,
-        &ir_identity,
-        &receipt,
-        &assumptions,
-        &non_claims,
-    );
+    let handoff =
+        kamacite_handoff(&requirements, &source_identities, &ir_identity, &receipt, &assumptions, &non_claims);
     IrChain {
         schema_version: SCHEMA_VERSION.to_string(),
         generated_by: GENERATOR_PATH.to_string(),
@@ -873,7 +857,12 @@ fn run_self_test() -> Result<(), String> {
 
     let mut stale_handoff = valid.clone();
     stale_handoff.records[0].handoff.verifier_receipt_identity = "stale".to_string();
-    expect_invalid(&stale_handoff, &requirements, "handoff verifier receipt identity is inconsistent", "stale handoff")?;
+    expect_invalid(
+        &stale_handoff,
+        &requirements,
+        "handoff verifier receipt identity is inconsistent",
+        "stale handoff",
+    )?;
 
     let mut empty_input_roots = valid.clone();
     empty_input_roots.records[0].verifier_receipt.input_roots = vec![];
@@ -979,7 +968,7 @@ mod tests {
     fn positive_fixture_validates() {
         let requirements = positive_fixture_requirements();
         let chain = positive_fixture_chain();
-        assert!(validate_ir_chain(&chain, &requirements).is_empty());
+        assert_eq!(validate_ir_chain(&chain, &requirements).len(), 0);
     }
 
     // r[verify trellis.proof_evidence_bundles.proof_evidence_ir_chain.verifier_receipt]

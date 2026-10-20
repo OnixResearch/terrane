@@ -10,10 +10,6 @@ use redb::Database;
 use redb::ReadableTable;
 use redb::TableDefinition;
 
-use crate::locator::RelativeLocator;
-use crate::repository_roots::IndexDatabaseRoot;
-use crate::repository_roots::RepositoryRoot;
-
 use super::extract::extract_facts;
 use super::extract::infer_openspec_context;
 use super::model::Blake3DigestHex;
@@ -30,6 +26,9 @@ use super::model::RequirementId;
 use super::model::RequirementQueryResult;
 use super::model::RequirementReferenceHit;
 use super::model::SymbolHit;
+use crate::locator::RelativeLocator;
+use crate::repository_roots::IndexDatabaseRoot;
+use crate::repository_roots::RepositoryRoot;
 
 const META_TABLE: TableDefinition<&str, u64> = TableDefinition::new("repo_index_meta");
 const PATH_TABLE: TableDefinition<&str, &[u8]> = TableDefinition::new("repo_index_paths");
@@ -436,7 +435,8 @@ fn repo_locator(path: &RepoPath) -> Result<RelativeLocator> {
 }
 
 fn locator_for(relative: &str) -> Result<RelativeLocator> {
-    RelativeLocator::new(relative).map_err(|error| anyhow!("tooling path {relative:?} is not a relative locator: {error}"))
+    RelativeLocator::new(relative)
+        .map_err(|error| anyhow!("tooling path {relative:?} is not a relative locator: {error}"))
 }
 
 fn scan_tracked_files(repository: &RepositoryRoot) -> Result<Vec<ScannedFile>> {

@@ -2,8 +2,12 @@ let contracts = import "upgrade-trial-contracts.ncl" in
 let probe_timeout_seconds_value = 600 in
 let maximum_saved_log_bytes_value = 65536 in
 {
-  schema_version = "trellis-octet-verus-upgrade-trial/v1",
+  schema_version = "trellis-octet-verus-upgrade-trial/v2",
   trial_id = "trellis-octet-verus-may17-upgrade-trial",
+  source_snapshot = {
+    repository_url = "https://github.com/brittonr/terrane",
+    revision = "65058ec60d69e405ffd324c44cf9fcba5177d453",
+  },
   baseline = {
     verifier = "verus@0.2026.03.22.5e66329",
     expected_result = "passed",

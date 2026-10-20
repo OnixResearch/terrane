@@ -173,7 +173,7 @@ mod tests {
         assert!(deps.contains(&cell(SECOND_COLUMN)));
 
         let constant = SpreadsheetFormula::Constant(SpreadsheetValue::Number(CONSTANT_VALUE));
-        assert!(spreadsheet_formula_dependencies(bounds(), &constant).expect("constant dependencies").is_empty());
+        assert_eq!(spreadsheet_formula_dependencies(bounds(), &constant).expect("constant dependencies").len(), 0);
     }
 
     // r[verify domain-primitives.spreadsheet.dependency]

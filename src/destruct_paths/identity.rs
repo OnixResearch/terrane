@@ -27,6 +27,8 @@ pub use model::ExpansionRequest;
 pub use model::Facts;
 pub use model::FailureClass;
 pub use model::FlagKey;
+pub use model::MAX_EXPANSION_STEPS;
+pub use model::MAX_PATHS;
 pub use model::Metadata;
 pub use model::Path;
 pub use model::PathKey;
@@ -39,8 +41,6 @@ pub use model::Step;
 pub use model::Table;
 pub use model::ValueKey;
 pub use model::VariantFields;
-pub use model::MAX_EXPANSION_STEPS;
-pub use model::MAX_PATHS;
 pub use paths::admit_record;
 
 #[cfg(test)]

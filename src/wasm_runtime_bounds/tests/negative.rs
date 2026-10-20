@@ -222,7 +222,7 @@ fn admitted_growth_failure_preserves_memory() {
     };
     assert_eq!(apply_growth(&mut malformed, GROWTH_PAGE_COUNT, GrowthPolicy::Allow), GrowthOutcome::InvalidMemory,);
     assert_eq!(malformed.pages, INITIAL_MEMORY_PAGES);
-    assert!(malformed.bytes.is_empty());
+    assert_eq!(malformed.bytes.len(), 0);
 }
 
 fn fault_class(schedule: &ChunkSchedule) -> ScheduleFault {

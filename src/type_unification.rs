@@ -87,7 +87,7 @@ pub open spec fn apply_subst_spec(subst: Substitution, ty: Type) -> Type
 // r[impl unify.subst-compose]
 pub open spec fn compose_subst_spec(s2: Substitution, s1: Substitution) -> Substitution {
     Map::new(
-        |var: u32| s1.contains_key(var) || s2.contains_key(var),
+        s1.dom().union(s2.dom()),
         |var: u32| {
             if s1.contains_key(var) {
                 apply_subst_spec(s2, s1[var])

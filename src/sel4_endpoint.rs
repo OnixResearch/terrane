@@ -479,7 +479,7 @@ mod tests {
         assert_eq!(matched.receiver, 8);
         assert_eq!(matched.badge, 55);
         assert!(endpoint.senders.is_empty());
-        assert!(endpoint.receivers.is_empty());
+        assert_eq!(endpoint.receivers.len(), 0);
     }
 
     proptest! {

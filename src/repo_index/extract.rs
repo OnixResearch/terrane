@@ -439,10 +439,10 @@ A threshold policy MUST count only distinct introducers.
     #[test]
     fn extractors_skip_invalid_requirement_ids() {
         let rust_facts = extract_facts(&repo_path("src/demo.rs"), b"// r[impl invalid[id]\n");
-        assert!(rust_facts.requirement_refs.is_empty());
+        assert_eq!(rust_facts.requirement_refs.len(), 0);
 
         let requirement_facts = extract_facts(&repo_path("docs/requirements.md"), b"r[invalid[id]\nText\n");
-        assert!(requirement_facts.requirement_defs.is_empty());
+        assert_eq!(requirement_facts.requirement_defs.len(), 0);
     }
 
     #[test]

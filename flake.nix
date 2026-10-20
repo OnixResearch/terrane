@@ -29,6 +29,10 @@
       url = "git+https://github.com/OnixResearch/terrane.git?rev=df99309c31e95b8068d90153e362dad6234d0cca";
       flake = false;
     };
+    verus-upgrade-trial-src = {
+      url = "git+https://github.com/brittonr/terrane.git?rev=65058ec60d69e405ffd324c44cf9fcba5177d453";
+      flake = false;
+    };
     # r[impl trellis.nickel_toolchain.cohort]
     nickel-1-17-0.url = "github:nickel-lang/nickel/1320a983e6c3d1e2fb53dd2464b084b4903b1426";
     onixpkgs = {
@@ -48,6 +52,7 @@
       octet-aeneas,
       nickel-export,
       trellis-consumer-release-src,
+      verus-upgrade-trial-src,
       nickel-1-17-0,
       onixpkgs,
       ...
@@ -66,6 +71,9 @@
         nickelExport = nickel-export.packages.${system}.default;
 
         rustToolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
+        currentVerus = pkgs.callPackage ./nix/verus.nix {
+          rustToolchain = pkgs.rust-bin.stable."1.99.1".default;
+        };
 
         craneLib = (crane.mkLib pkgs).overrideToolchain rustToolchain;
 
@@ -149,8 +157,8 @@
 
         # --- Verification tools ---
 
-        # Historical verifier retained only as the comparison baseline in the
-        # May 17 promotion receipt. Shipped proofs consume Octet's package below.
+        # Historical verifier for the May 17 comparison receipt.
+        # Current proofs use the pinned October package.
         baselineRustToolchain = pkgs.rust-bin.stable."1.94.0".default;
 
         baselineVerus = pkgs.stdenv.mkDerivation {
@@ -424,7 +432,7 @@
             ''
               set -eu
               corpus_dir=${./upstream-verus-corpus}
-              trellis_source=${verusProofSource}
+              trellis_source=${verus-upgrade-trial-src}
               paper_source=${corpusSources.paper-sosp24-artifact}
               ironkv_source=${corpusSources.verified-ironkv}
               allocator_source=${corpusSources.verified-memory-allocator}
@@ -450,7 +458,7 @@
                 fi
               done
               jq --exit-status '
-                .schema_version == "trellis-octet-verus-upgrade-trial/v1"
+                .schema_version == "trellis-octet-verus-upgrade-trial/v2"
                 and .decision.expected == "promote"
                 and .decision.preserve_current_pin == false
                 and .decision.recommended_octet_compatibility_status == "native"
@@ -462,6 +470,7 @@
                 and ([.rows[] | select(.source_variant == "adapted")] | length == ${toString upgradeTrialAdaptedRowCount})
               ' "$TMPDIR/upgrade-trial.json" > /dev/null
               test '${octetSourceRevision}' = '${upgradeTrialProfile.candidate.provider_revision}'
+              test '${verus-upgrade-trial-src.rev}' = '${upgradeTrialProfile.source_snapshot.revision}'
               jq --exit-status '
                 .profile_id == "octet-verus-0.2026.05.17.e479cce"
                 and .verifier.release == "0.2026.05.17.e479cce"
@@ -1087,7 +1096,7 @@
           nickel-1-17-0 = nickel;
           default = verified-logic;
           verified-logic = verified-logic;
-          verus = octetProductionVerus;
+          verus = currentVerus;
           octet-production-verus = octetProductionVerus;
           verusfmt = verusfmt;
           upstream-verus-corpus = upstreamVerusCorpus;
@@ -1803,24 +1812,24 @@
           verusfmt-ratchet = verusfmtRatchetCheck;
           verus-upgrade-trial = verusUpgradeTrial;
 
-          # Verus formal verification through Octet's published production package.
+          # Current proofs use the pinned October Verus release.
           verus-proofs =
             pkgs.runCommand "verus-proofs"
               {
-                nativeBuildInputs = [ octetProductionVerus ];
+                nativeBuildInputs = [ currentVerus ];
               }
               ''
-                candidate_root=${octetProductionVerus}/libexec/verus
-                octet-production-verus \
+                candidate_root=${currentVerus}/libexec/verus
+                terrane-verus \
                   --triggers-mode silent \
                   --rlimit ${toString trellisRlimit} \
                   --crate-type=lib \
                   --extern vstd="$candidate_root/libvstd.rlib" \
-                  --extern builtin="$candidate_root/libverus_builtin.rlib" \
-                  --extern builtin_macros="$candidate_root/libverus_builtin_macros.so" \
-                  --extern state_machines_macros="$candidate_root/libverus_state_machines_macros.so" \
+                  --extern verus_builtin="$candidate_root/libverus_builtin.rlib" \
+                  --extern verus_builtin_macros="$candidate_root/libverus_builtin_macros${pkgs.stdenv.hostPlatform.extensions.sharedLibrary}" \
+                  --extern verus_state_machines_macros="$candidate_root/libverus_state_machines_macros${pkgs.stdenv.hostPlatform.extensions.sharedLibrary}" \
                   -L "$candidate_root" \
-                  --edition 2021 \
+                  --edition 2024 \
                   ${verusProofSource}/src/lib.rs
                 touch $out
               '';

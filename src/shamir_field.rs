@@ -8,7 +8,13 @@
 #[cfg(verus_keep_ghost)]
 use vstd::arithmetic::div_mod::lemma_fundamental_div_mod;
 #[cfg(verus_keep_ghost)]
+use vstd::arithmetic::div_mod::lemma_fundamental_div_mod_converse_mod;
+#[cfg(verus_keep_ghost)]
+use vstd::arithmetic::div_mod::lemma_mod_multiples_basic;
+#[cfg(verus_keep_ghost)]
 use vstd::arithmetic::div_mod::lemma_mod_pos_bound;
+#[cfg(verus_keep_ghost)]
+use vstd::arithmetic::mul::lemma_mul_is_commutative;
 use vstd::prelude::*;
 
 verus! {
@@ -46,8 +52,7 @@ proof fn divisor_has_small_cofactor(p: int, d: int)
         requires q > 0, q < d;
     assert(q * q < p) by(nonlinear_arith)
         requires q * q < q * d, d * q == p;
-    assert(p % q == 0) by(nonlinear_arith)
-        requires q > 0, d * q == p;
+    lemma_mod_multiples_basic(d, q);
 }
 
 proof fn no_small_divisors_implies_prime(p: u64, limit: u64)
@@ -292,8 +297,10 @@ proof fn gcd_divides(a: u64, b: u64)
                 (a as int) == ((a / b) as int) * (b as int) + ((a % b) as int),
                 (b as int) == ((b / g) as int) * (g as int),
                 ((a % b) as int) == (((a % b) / g) as int) * (g as int);
-        assert((a % g) == 0) by(nonlinear_arith)
-            requires g > 0, (a as int) == (g as int) * ((((a / b) * (b / g)) as int) + (((a % b) / g) as int));
+        let quotient = (((a / b) * (b / g)) as int) + (((a % b) / g) as int);
+        lemma_mul_is_commutative(g as int, quotient);
+        lemma_mod_multiples_basic(quotient, g as int);
+        assert(a % g == 0);
     }
 }
 
@@ -391,8 +398,8 @@ proof fn field_inv_exists(a: u64, p: u64)
             (a as int) * r > 0,
             (a as int) * r < (p as int) * (p as int),
             p > 1;
-    assert(((a as int) * r) % (p as int) == 1) by(nonlinear_arith)
-        requires (a as int) * r == 1 + (p as int) * m, 0 <= m, p > 1;
+    lemma_mul_is_commutative(p as int, m);
+    lemma_fundamental_div_mod_converse_mod((a as int) * r, p as int, m, 1);
     assert(field_mul_spec(a, r as u64, p) == 1);
     field_inv_from_has_witness(a, p, 1, r);
 }

@@ -12,10 +12,7 @@ are listed in `openspec/specs/verification-gaps/spec.md` so any weaker
 bridge stays explicit. Requirement coverage is tracked by
 [Tracey](https://tracey.bearcove.eu/).
 
-**11142 Verus proofs · 5216 tests · 2270 requirements · 624 modules · 16 trusted/proof-gap boundaries**
-
-The test headline is the last full-suite count; seven additional focused
-fenced-attempt tests pass but are not included until the next full-suite count.
+**11139 Verus proofs · 5223 tests · 2270 requirements · 624 modules · 16 trusted/proof-gap boundaries**
 
 Terrane is an active research library. APIs, proof inventories, and verifier
 pins may evolve; each verification claim remains scoped to the exact source,
@@ -31,9 +28,10 @@ to public source snapshots; the UCAN-facing profile binds an anonymously fetched
 immutable Terrane source. Source availability and profile alignment do not confer
 downstream correctness or release eligibility.
 
-Current Aeneas and May 17 upgrade-trial profiles have been re-admitted against
-their exact public providers through fresh proofs, negative controls, and current
-receipt linkage. Historical archived receipts retain their original identities.
+Recorded Aeneas and May 17 receipts retain their exact source and provider identities.
+The current verifier upgrade does not regenerate those receipts.
+The May 17 comparison now uses the immutable pre-upgrade source.
+
 The maintained Cairn overlay passed the pinned public CLI's native validation and
 proposal/design/tasks gates; specification sync and archive completed for the
 [public-source change](.cairn/archive/2026-10-14-publish-independent-public-source/).
@@ -659,10 +657,11 @@ The drift checker treats the compact lists below as README catalog entries for p
 
 Start with [CONTRIBUTING.md](CONTRIBUTING.md) for the public workflow, module template, Tracey annotation rules, proof-gap policy, and baseline/final validation expectations. Use [docs/module-guide.md](docs/module-guide.md) to choose modules by task or problem domain, [docs/module-index.md](docs/module-index.md) for objective module maturity facts, [docs/invariant-surface-catalog.md](docs/invariant-surface-catalog.md) for invariant evidence rows, [docs/proof-evidence-bundles.md](docs/proof-evidence-bundles.md) for downstream evidence export, [docs/proof-evidence-ir-chain.json](docs/proof-evidence-ir-chain.json) for linked verifier-receipt evidence chains, [docs/kani-boundary.md](docs/kani-boundary.md) for complementary Kani evidence boundaries, [docs/proof-artifact-manifest.md](docs/proof-artifact-manifest.md) for exported primitive manifest rows, [docs/ucan-bridge-coverage.md](docs/ucan-bridge-coverage.md) for UCAN bridge coverage, [docs/verified-logic-consumer-profile.md](docs/verified-logic-consumer-profile.md) for direct dependency and audited vendoring metadata, and [docs/cookbook.md](docs/cookbook.md) for short workflow recipes.
 
-Nix proof checks resolve locked public inputs, including independently published
-Octet and onixpkgs sources. Ordinary Cargo tests do not reproduce the Verus
-verification result. Lifecycle changes additionally require the public Cairn CLI
-and compatible governing policy described in [CONTRIBUTING.md](CONTRIBUTING.md).
+Nix proof checks use locked public inputs and the pinned October Verus archive.
+Ordinary Cargo builds use `nightly-2026-10-14` for registered lint tools.
+Verus uses its own Rust `1.99.1` toolchain.
+Lifecycle changes need the public Cairn CLI and the policy in [CONTRIBUTING.md](CONTRIBUTING.md).
+
 For confidential vulnerability reports, see [SECURITY.md](SECURITY.md).
 
 ```bash
@@ -674,6 +673,22 @@ cargo clippy --all-targets -- -D warnings
 ```
 
 ## Verification
+
+Current proofs use Verus `0.2026.10.18.7d82994` and
+`vstd = "=0.0.0-2026-10-18-0147"`. Nix checks each platform archive against its pinned SHA-256.
+Sail can verify the same library with its compatible Verus fork:
+
+```sh
+RUSTUP_TOOLCHAIN=1.99.1 sail verify --lib --output json -- \
+  --triggers-mode silent --rlimit 20
+```
+
+Sail proof reuse needs a Cargo configuration without `build.rustc-wrapper`.
+Configuration files in workspace ancestors also apply.
+Global Cargo configuration is outside this repository.
+
+With Sail `2293db1`, local verification passed, but repeated runs did not reuse whole-target proofs.
+Sail reported new build-script input declarations on each run.
 
 ```bash
 ./scripts/verify.rs        # all gates: clippy → tests → verus → coverage
@@ -739,28 +754,31 @@ hashes, license files, and sentinels; it does not run or import upstream proofs.
 Promotion to Terrane formal evidence still requires an exact local verifier run,
 assumption account, source/proof/tool bindings, and Terrane-owned receipt.
 
-The fail-closed May 17 trial validates Octet Verus `0.2026.05.17.e479cce`:
-both complete Trellis runs report `10712 verified, 0 errors`; adapted IronKV
-reports `312 verified, 0 errors`; adapted verified-memory-allocator reports
-`732 verified, 0 errors`; and unmodified verified-node-replication reports
-`254 verified, 0 errors`. The two patches are BLAKE3-bound, preserve assumption
-and trusted-marker counts, and are reported only as adapted-source results. The
-SOSP microcases remain diagnostic-only and VerusBelt remains a Rocq
-semantic-reference audit.
+The May 17 comparison uses immutable Terrane source
+`65058ec60d69e405ffd324c44cf9fcba5177d453`.
+It retains the original verifier pins, corpus patches, negative controls, and expected results.
+It does not certify the October verifier or the updated source.
 
-The production provider is locked to the independent public `octet-public`
-source selected by `inputs.octet` in `flake.nix`. Terrane's default proof check
-and wrapper consume Octet Verus `0.2026.05.17.e479cce`; the former
-`0.2026.03.22.5e66329` package remains only as the receipt's historical
-comparison baseline.
+| Historical cohort | Expected verified count |
+|---|---:|
+| March verifier, pinned Terrane snapshot | 11142 |
+| May verifier, pinned Terrane snapshot | 11142 |
+| Adapted IronKV | 312 |
+| Adapted verified-memory-allocator | 732 |
+| Unmodified verified-node-replication | 254 |
 
-The pinned `verusfmt` rail consumes Octet's revision-bound formatter and typed
-profile packages; Terrane does not reconstruct a local release fallback. It uses
-`upstream-verus-corpus/verusfmt-baseline.txt` as an exact migration ratchet rather
-than rewriting the existing proof corpus wholesale. A new nonconforming file, a
-stale baseline entry, or central-profile drift fails. The promoted verifier is
-admitted by the separate May 17 compatibility receipt; package identity and
-baseline membership alone still do not claim formatting or proof success.
+The SOSP microcases remain diagnostic-only. VerusBelt remains a Rocq reference audit.
+Adapted-source results do not certify the unmodified upstream revisions.
+
+The default proof check and wrapper use the Terrane-owned package in `nix/verus.nix`.
+Its October verifier and Rust `1.99.1` are independent of the historical Octet provider.
+
+
+The formatter still uses Octet's revision-bound `verusfmt` and typed profile.
+`upstream-verus-corpus/verusfmt-baseline.txt` remains the exact migration ratchet.
+A new nonconforming file, stale baseline entry, or profile drift fails.
+The formatter's May compatibility identity does not certify October proofs.
+
 
 The Octet check uses `octet-baseline.json` to accept current warning-level
 findings while rejecting any new unbaselined stable finding ID. The local
@@ -772,7 +790,7 @@ pre-commit hook delegates to that same pinned Nix check.
 src/lib.rs              ← crate root, 604 public module declarations
 src/<module>.rs         ← spec fn + exec fn + proof fn + #[cfg(test)] tests
 docs/requirements.md    ← canonical requirement prose and Tracey anchors
-scripts/verus.sh        ← Octet production-Verus package resolver
+scripts/verus.sh        ← pinned Verus package resolver
 scripts/verify.rs       ← full verification pipeline
 scripts/check-*.rs      ← annotation enforcement
 ```

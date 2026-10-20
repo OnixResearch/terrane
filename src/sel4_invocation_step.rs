@@ -389,7 +389,7 @@ mod tests {
             badge: 99,
         });
         assert_eq!(out, Ok(Sel4InvocationAccepted::EndpointSend { receiver: 1 }));
-        assert!(state.endpoints[0].receivers.is_empty());
+        assert_eq!(state.endpoints[0].receivers.len(), 0);
         assert!(matches!(state.tcbs[1].state, TcbState::Runnable));
     }
 

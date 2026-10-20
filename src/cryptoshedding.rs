@@ -5,21 +5,22 @@
 
 #![allow(clippy::cast_possible_truncation, clippy::cast_sign_loss, clippy::cast_possible_wrap)]
 
+use vstd::iset::ISet;
+#[cfg(verus_keep_ghost)]
+use vstd::iset::lemma_iset_contains_len;
+#[cfg(verus_keep_ghost)]
+use vstd::iset::lemma_iset_empty_finite;
+#[cfg(verus_keep_ghost)]
+use vstd::iset::lemma_iset_empty_len;
+#[cfg(verus_keep_ghost)]
+use vstd::iset::lemma_iset_insert_finite;
+#[cfg(verus_keep_ghost)]
+use vstd::iset::lemma_iset_insert_len;
+#[cfg(verus_keep_ghost)]
+use vstd::iset::lemma_iset_remove_finite;
+#[cfg(verus_keep_ghost)]
+use vstd::iset::lemma_iset_remove_len;
 use vstd::prelude::*;
-#[cfg(verus_keep_ghost)]
-use vstd::set::axiom_set_contains_len;
-#[cfg(verus_keep_ghost)]
-use vstd::set::axiom_set_empty_finite;
-#[cfg(verus_keep_ghost)]
-use vstd::set::axiom_set_empty_len;
-#[cfg(verus_keep_ghost)]
-use vstd::set::axiom_set_insert_finite;
-#[cfg(verus_keep_ghost)]
-use vstd::set::axiom_set_insert_len;
-#[cfg(verus_keep_ghost)]
-use vstd::set::axiom_set_remove_finite;
-#[cfg(verus_keep_ghost)]
-use vstd::set::axiom_set_remove_len;
 
 verus! {
 
@@ -33,8 +34,8 @@ pub struct Keystore {
 
 // r[impl cryptoshedding.shed-definition]
 // r[impl cryptoshedding.chain-recoverability]
-pub open spec fn keystore_model_from_bits(bits: Seq<bool>) -> Set<u64> {
-    Set::new(|k: u64| 0 <= (k as int) < bits.len() && bits[k as int])
+pub open spec fn keystore_model_from_bits(bits: Seq<bool>) -> ISet<u64> {
+    ISet::new(|k: u64| 0 <= (k as int) < bits.len() && bits[k as int])
 }
 
 impl KeyTree {
@@ -48,7 +49,7 @@ impl KeyTree {
 impl Keystore {
     // r[impl cryptoshedding.shed-definition]
     // r[impl cryptoshedding.chain-recoverability]
-    pub open spec fn view(&self) -> Set<u64> {
+    pub open spec fn view(&self) -> ISet<u64> {
         keystore_model_from_bits(self.present@)
     }
 }
@@ -98,8 +99,8 @@ pub open spec fn reaches_root_fuel_spec(tree: Seq<Option<u64>>, node: u64, fuel:
     }
 }
 
-spec fn nodes_upto_spec(n: nat) -> Set<u64> {
-    Set::new(|k: u64| (k as int) < n)
+spec fn nodes_upto_spec(n: nat) -> ISet<u64> {
+    ISet::new(|k: u64| (k as int) < n)
 }
 
 proof fn nodes_upto_finite_len(n: nat)
@@ -111,15 +112,15 @@ proof fn nodes_upto_finite_len(n: nat)
     decreases n,
 {
     if n == 0 {
-        assert(nodes_upto_spec(n) =~= Set::<u64>::empty()) by {
-            assert forall|k: u64| nodes_upto_spec(n).contains(k) == Set::<u64>::empty().contains(k) by {
+        assert(nodes_upto_spec(n) =~= ISet::<u64>::empty()) by {
+            assert forall|k: u64| nodes_upto_spec(n).contains(k) == ISet::<u64>::empty().contains(k) by {
             }
         }
-        assert(Set::<u64>::empty().finite()) by {
-            broadcast use axiom_set_empty_finite;
+        assert(ISet::<u64>::empty().finite()) by {
+            broadcast use lemma_iset_empty_finite;
         }
-        assert(Set::<u64>::empty().len() == 0) by {
-            broadcast use axiom_set_empty_len;
+        assert(ISet::<u64>::empty().len() == 0) by {
+            broadcast use lemma_iset_empty_len;
         }
     } else {
         nodes_upto_finite_len((n - 1) as nat);
@@ -133,12 +134,12 @@ proof fn nodes_upto_finite_len(n: nat)
                 }
             }
         }
-        axiom_set_insert_finite(prev, last);
-        axiom_set_insert_len(prev, last);
+        lemma_iset_insert_finite(prev, last);
+        lemma_iset_insert_len(prev, last);
     }
 }
 
-proof fn reaches_root_with_budget(tree: Seq<Option<u64>>, node: u64, budget: Set<u64>)
+proof fn reaches_root_with_budget(tree: Seq<Option<u64>>, node: u64, budget: ISet<u64>)
     requires
         tree.len() <= u64::MAX as nat,
         well_formed_spec(tree),
@@ -153,7 +154,7 @@ proof fn reaches_root_with_budget(tree: Seq<Option<u64>>, node: u64, budget: Set
         reaches_root_fuel_spec(tree, node, budget.len()),
     decreases budget.len(),
 {
-    axiom_set_contains_len(budget, node);
+    lemma_iset_contains_len(budget, node);
     if budget.len() == 0 {
         assert(false);
     }
@@ -180,8 +181,8 @@ proof fn reaches_root_with_budget(tree: Seq<Option<u64>>, node: u64, budget: Set
                 }
             }
             let next_budget = budget.remove(node);
-            axiom_set_remove_finite(budget, node);
-            axiom_set_remove_len(budget, node);
+            lemma_iset_remove_finite(budget, node);
+            lemma_iset_remove_len(budget, node);
             assert(next_budget.len() + 1 == budget.len());
             assert(next_budget.contains(parent));
             assert(next_budget.len() < budget.len());
@@ -239,7 +240,7 @@ pub open spec fn well_formed_spec(tree: Seq<Option<u64>>) -> bool {
 
 // r[impl cryptoshedding.chain-recoverability]
 pub open spec fn chain_present_fuel_spec(
-    tree: Seq<Option<u64>>, keystore: Set<u64>, node: u64, fuel: nat,
+    tree: Seq<Option<u64>>, keystore: ISet<u64>, node: u64, fuel: nat,
 ) -> bool
     decreases fuel,
 {
@@ -256,19 +257,19 @@ pub open spec fn chain_present_fuel_spec(
 }
 
 // r[impl cryptoshedding.chain-recoverability]
-pub open spec fn recoverable_spec(tree: Seq<Option<u64>>, keystore: Set<u64>, leaf: u64) -> bool {
+pub open spec fn recoverable_spec(tree: Seq<Option<u64>>, keystore: ISet<u64>, leaf: u64) -> bool {
     &&& 0 <= (leaf as int) < tree.len()
     &&& is_leaf_spec(tree, leaf)
     &&& chain_present_fuel_spec(tree, keystore, leaf, tree.len())
 }
 
 // r[impl cryptoshedding.shed-definition]
-pub open spec fn shed_spec(keystore: Set<u64>, key: u64) -> Set<u64> {
+pub open spec fn shed_spec(keystore: ISet<u64>, key: u64) -> ISet<u64> {
     keystore.remove(key)
 }
 
 proof fn shed_non_chain_preserves_chain_present(
-    tree: Seq<Option<u64>>, keystore: Set<u64>, node: u64, key: u64, fuel: nat,
+    tree: Seq<Option<u64>>, keystore: ISet<u64>, node: u64, key: u64, fuel: nat,
 )
     requires
         well_formed_spec(tree),
@@ -302,7 +303,7 @@ proof fn shed_non_chain_preserves_chain_present(
 }
 
 proof fn shed_on_chain_breaks_chain_present(
-    tree: Seq<Option<u64>>, keystore: Set<u64>, node: u64, key: u64, fuel: nat,
+    tree: Seq<Option<u64>>, keystore: ISet<u64>, node: u64, key: u64, fuel: nat,
 )
     requires
         well_formed_spec(tree),
@@ -370,8 +371,8 @@ proof fn leaf_has_no_child_chain(
 }
 
 // r[impl cryptoshedding.subtree-shedding]
-pub open spec fn subtree_members_spec(tree: Seq<Option<u64>>, root: u64) -> Set<u64> {
-    Set::new(|node: u64| in_subtree_spec(tree, node, root))
+pub open spec fn subtree_members_spec(tree: Seq<Option<u64>>, root: u64) -> ISet<u64> {
+    ISet::new(|node: u64| in_subtree_spec(tree, node, root))
 }
 
 // r[impl cryptoshedding.rotation-correctness]
@@ -653,14 +654,14 @@ pub fn rotate(tree: &KeyTree, leaf: usize, new_parent: usize) -> (result: KeyTre
 
 // r[impl cryptoshedding.idempotent-destruction]
 // r[verify cryptoshedding.idempotent-destruction]
-pub proof fn shed_idempotent(keystore: Set<u64>, key: u64)
+pub proof fn shed_idempotent(keystore: ISet<u64>, key: u64)
     ensures shed_spec(shed_spec(keystore, key), key) == shed_spec(keystore, key)
 {
 }
 
 // r[impl cryptoshedding.shed-definition]
 // r[verify cryptoshedding.shed-definition]
-pub proof fn shed_absent_key_is_noop(keystore: Set<u64>, key: u64)
+pub proof fn shed_absent_key_is_noop(keystore: ISet<u64>, key: u64)
     requires
         !keystore.contains(key),
     ensures
@@ -671,7 +672,7 @@ pub proof fn shed_absent_key_is_noop(keystore: Set<u64>, key: u64)
 // r[impl cryptoshedding.shed-completeness]
 // r[verify cryptoshedding.shed-completeness]
 pub proof fn shedding_on_chain_breaks_recoverability(
-    tree: Seq<Option<u64>>, keystore: Set<u64>, leaf: u64, key: u64,
+    tree: Seq<Option<u64>>, keystore: ISet<u64>, leaf: u64, key: u64,
 )
     requires
         well_formed_spec(tree),
@@ -684,7 +685,7 @@ pub proof fn shedding_on_chain_breaks_recoverability(
 
 // r[impl cryptoshedding.shed-completeness]
 // r[verify cryptoshedding.shed-completeness]
-pub proof fn shedding_leaf_breaks_recoverability(tree: Seq<Option<u64>>, keystore: Set<u64>, leaf: u64)
+pub proof fn shedding_leaf_breaks_recoverability(tree: Seq<Option<u64>>, keystore: ISet<u64>, leaf: u64)
     requires
         well_formed_spec(tree),
         recoverable_spec(tree, keystore, leaf),
@@ -696,7 +697,7 @@ pub proof fn shedding_leaf_breaks_recoverability(tree: Seq<Option<u64>>, keystor
 // r[impl cryptoshedding.shed-isolation]
 // r[verify cryptoshedding.shed-isolation]
 pub proof fn shedding_nonancestor_preserves_recoverability(
-    tree: Seq<Option<u64>>, keystore: Set<u64>, leaf: u64, key: u64,
+    tree: Seq<Option<u64>>, keystore: ISet<u64>, leaf: u64, key: u64,
 )
     requires
         well_formed_spec(tree),
@@ -889,7 +890,7 @@ pub proof fn is_leaf_spec_matches_no_children(tree: Seq<Option<u64>>, node: u64)
 
 // r[impl cryptoshedding.chain-recoverability]
 // r[verify cryptoshedding.chain-recoverability]
-pub proof fn recoverable_spec_matches_chain_present(tree: Seq<Option<u64>>, keystore: Set<u64>, leaf: u64)
+pub proof fn recoverable_spec_matches_chain_present(tree: Seq<Option<u64>>, keystore: ISet<u64>, leaf: u64)
     ensures
         recoverable_spec(tree, keystore, leaf)
             == (0 <= (leaf as int) < tree.len()
@@ -910,7 +911,7 @@ pub proof fn subtree_members_matches_in_subtree(tree: Seq<Option<u64>>, root: u6
 // r[impl cryptoshedding.subtree-shedding]
 // r[verify cryptoshedding.subtree-shedding]
 pub proof fn shedding_subtree_root_breaks_leaf_recoverability(
-    tree: Seq<Option<u64>>, keystore: Set<u64>, leaf: u64, root: u64,
+    tree: Seq<Option<u64>>, keystore: ISet<u64>, leaf: u64, root: u64,
 )
     requires
         well_formed_spec(tree),
@@ -931,7 +932,7 @@ pub proof fn shedding_subtree_root_breaks_leaf_recoverability(
 // r[impl cryptoshedding.subtree-shedding]
 // r[verify cryptoshedding.subtree-shedding]
 pub proof fn shedding_outside_subtree_preserves_leaf_recoverability(
-    tree: Seq<Option<u64>>, keystore: Set<u64>, leaf: u64, root: u64,
+    tree: Seq<Option<u64>>, keystore: ISet<u64>, leaf: u64, root: u64,
 )
     requires
         well_formed_spec(tree),
@@ -951,7 +952,7 @@ pub proof fn shedding_outside_subtree_preserves_leaf_recoverability(
 // r[impl cryptoshedding.idempotent-destruction]
 // r[verify cryptoshedding.idempotent-destruction]
 pub proof fn double_shed_preserves_recoverability(
-    tree: Seq<Option<u64>>, keystore: Set<u64>, leaf: u64, key: u64,
+    tree: Seq<Option<u64>>, keystore: ISet<u64>, leaf: u64, key: u64,
 )
     ensures
         recoverable_spec(tree, shed_spec(shed_spec(keystore, key), key), leaf)
@@ -1185,7 +1186,7 @@ pub proof fn rotate_preserves_well_formedness(tree: Seq<Option<u64>>, leaf: u64,
 // r[impl cryptoshedding.rotation-correctness]
 // r[verify cryptoshedding.rotation-correctness]
 pub proof fn rotate_recoverability_matches_new_chain(
-    tree: Seq<Option<u64>>, keystore: Set<u64>, leaf: u64, new_parent: u64,
+    tree: Seq<Option<u64>>, keystore: ISet<u64>, leaf: u64, new_parent: u64,
 )
     requires
         valid_rotation_spec(tree, leaf, new_parent),
@@ -1260,7 +1261,7 @@ pub proof fn valid_rotation_excludes_old_parent_from_new_chain(
 // r[impl cryptoshedding.rotation-correctness]
 // r[verify cryptoshedding.rotation-correctness]
 pub proof fn rotate_old_parent_shed_preserves_recoverability(
-    tree: Seq<Option<u64>>, keystore: Set<u64>, leaf: u64, new_parent: u64, old_parent: u64,
+    tree: Seq<Option<u64>>, keystore: ISet<u64>, leaf: u64, new_parent: u64, old_parent: u64,
 )
     requires
         valid_rotation_spec(tree, leaf, new_parent),
@@ -1289,7 +1290,7 @@ pub proof fn rotate_old_parent_shed_preserves_recoverability(
 // r[impl cryptoshedding.rotation-correctness]
 // r[verify cryptoshedding.rotation-correctness]
 pub proof fn rotate_new_parent_shed_breaks_recoverability(
-    tree: Seq<Option<u64>>, keystore: Set<u64>, leaf: u64, new_parent: u64,
+    tree: Seq<Option<u64>>, keystore: ISet<u64>, leaf: u64, new_parent: u64,
 )
     requires
         valid_rotation_spec(tree, leaf, new_parent),

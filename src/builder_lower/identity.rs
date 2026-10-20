@@ -25,6 +25,7 @@ pub use model::FailureClass;
 pub use model::FunctionKey;
 pub use model::LocalClass;
 pub use model::LocalStorage;
+pub use model::MAX_OPERATIONS;
 pub use model::Operation;
 pub use model::PlaceKey;
 pub use model::Record;
@@ -32,7 +33,6 @@ pub use model::Rejection;
 pub use model::Table;
 pub use model::TypeKey;
 pub use model::ValueKey;
-pub use model::MAX_OPERATIONS;
 
 #[cfg(test)]
 mod tests;

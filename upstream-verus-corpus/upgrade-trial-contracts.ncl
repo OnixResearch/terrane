@@ -81,8 +81,12 @@ let TrialRowInvariant = std.contract.from_predicate (fun row =>
 ) in
 {
   UpgradeTrial = {
-    schema_version | OneOf ["trellis-octet-verus-upgrade-trial/v1"],
+    schema_version | OneOf ["trellis-octet-verus-upgrade-trial/v2"],
     trial_id | NonEmptyString,
+    source_snapshot | {
+      repository_url | NonEmptyString,
+      revision | GitRevision,
+    },
     baseline | {
       verifier | OneOf ["verus@0.2026.03.22.5e66329"],
       expected_result | OneOf ["passed"],

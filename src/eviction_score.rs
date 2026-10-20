@@ -363,10 +363,21 @@ proof fn full_score_tier_monotonic(
     let tm1 = tier_multiplier_spec(t1);
     let tm2 = tier_multiplier_spec(t2);
     tier_multiplier_monotonic(t1, t2);
-    assert(base * pm <= 10000 * 20) by(nonlinear_arith)
-        requires base <= 10000, pm <= 20;
-    assert(base * pm * tm1 <= base * pm * tm2) by(nonlinear_arith)
-        requires tm1 <= tm2, base * pm <= 200000;
+    let scaled = base as int * pm as int;
+    assert(pm == 1 || pm == 2 || pm == 4 || pm == 20);
+    assert(0 <= base as int * pm as int <= 200000) by(nonlinear_arith)
+        requires 0 <= base <= 10000, 1 <= pm <= 20;
+    assert(0 <= scaled * tm1 as int <= 800000) by(nonlinear_arith)
+        requires 0 <= scaled <= 200000, 0 <= tm1 <= 4;
+    assert(0 <= scaled * tm2 as int <= 800000) by(nonlinear_arith)
+        requires 0 <= scaled <= 200000, 0 <= tm2 <= 4;
+    assert(scaled * tm1 as int <= scaled * tm2 as int) by(nonlinear_arith)
+        requires 0 <= scaled, tm1 <= tm2;
+    // Both products fit in u64, so the casts preserve their order.
+    assert(full_score_spec(w1, w2, w3, w4, s1, s2, s3, s4, priority, t1) as int
+        == scaled * tm1 as int);
+    assert(full_score_spec(w1, w2, w3, w4, s1, s2, s3, s4, priority, t2) as int
+        == scaled * tm2 as int);
 }
 
 // r[verify eviction-score.full-score]

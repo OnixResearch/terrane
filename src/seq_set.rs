@@ -409,22 +409,46 @@ proof fn intersection_from_in_both(a: Seq<int>, b: Seq<int>, from: int)
         ==> #[trigger] is_member_spec(a, x) && is_member_spec(b, x),
     decreases if from < a.len() as int { (a.len() - from) as int } else { 0 },
 {
+    let result = set_intersection_from_spec(a, b, from);
     if from < a.len() as int {
         intersection_from_in_both(a, b, from + 1);
-        if is_member_spec(b, a[from]) {
-            let result = seq![a[from]] + set_intersection_from_spec(a, b, from + 1);
-            assert forall|x: int| is_member_spec(result, x)
-                implies #[trigger] is_member_spec(a, x) && is_member_spec(b, x)
-            by {
-                let wi = choose|i: int| 0 <= i < result.len() && result[i] == x;
+        let rest = set_intersection_from_spec(a, b, from + 1);
+        // Trigger the tail fact from membership in the tail.
+        assert forall|x: int| #[trigger] is_member_spec(rest, x)
+            implies is_member_spec(a, x) && is_member_spec(b, x)
+        by {
+            assert(is_member_spec(a, x));
+            assert(is_member_spec(b, x));
+        }
+    }
+    assert forall|x: int| is_member_spec(result, x)
+        implies #[trigger] is_member_spec(a, x) && is_member_spec(b, x)
+    by {
+        let wi = choose|i: int| 0 <= i < result.len() && result[i] == x;
+        if from >= a.len() as int {
+            assert(result == Seq::<int>::empty());
+            assert(result.len() == 0);
+        } else {
+            let rest = set_intersection_from_spec(a, b, from + 1);
+            if is_member_spec(b, a[from]) {
+                assert(result == seq![a[from]] + rest);
                 if wi == 0 {
                     assert(a[from] == x);
+                    assert(0 <= from < a.len());
+                    assert(is_member_spec(a, x));
                     assert(is_member_spec(b, x));
                 } else {
-                    let rest = set_intersection_from_spec(a, b, from + 1);
+                    assert(0 <= wi - 1 < rest.len());
                     assert(rest[wi - 1] == x);
                     assert(is_member_spec(rest, x));
+                    assert(is_member_spec(a, x));
+                    assert(is_member_spec(b, x));
                 }
+            } else {
+                assert(result == rest);
+                assert(is_member_spec(rest, x));
+                assert(is_member_spec(a, x));
+                assert(is_member_spec(b, x));
             }
         }
     }

@@ -198,14 +198,13 @@ pub fn resolve_conflict(
             }
         }
         None => {
-            let overlap: usize;
-            if start_index + leader_entries.len() <= follower.len() {
-                overlap = leader_entries.len();
+            let overlap = if start_index + leader_entries.len() <= follower.len() {
+                leader_entries.len()
             } else if start_index <= follower.len() {
-                overlap = follower.len() - start_index;
+                follower.len() - start_index
             } else {
-                overlap = 0;
-            }
+                0
+            };
             append_from = overlap;
 
             // No truncation happened — follower is unchanged

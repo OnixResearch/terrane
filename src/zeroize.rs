@@ -161,7 +161,7 @@ mod tests {
     fn test_zeroize_empty() {
         let mut buf: Vec<u8> = vec![];
         zeroize(&mut buf);
-        assert!(buf.is_empty());
+        assert_eq!(buf.len(), 0);
     }
 
     // r[verify zeroize.scrub]

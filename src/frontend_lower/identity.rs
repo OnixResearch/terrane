@@ -21,6 +21,7 @@ pub use model::DefinitionKey;
 pub use model::Facts;
 pub use model::FailureClass;
 pub use model::GeneratedNode;
+pub use model::MAX_RECORDS;
 pub use model::Mapping;
 pub use model::OwnerKey;
 pub use model::Record;
@@ -29,7 +30,6 @@ pub use model::ScopedKey;
 pub use model::SourceKey;
 pub use model::Table;
 pub use model::UsePolicy;
-pub use model::MAX_RECORDS;
 
 #[cfg(test)]
 mod tests;
