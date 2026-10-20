@@ -2050,7 +2050,8 @@
         "octet-aeneas": "octet-aeneas",
         "onixpkgs": "onixpkgs",
         "rust-overlay": "rust-overlay_16",
-        "trellis-consumer-release-src": "trellis-consumer-release-src"
+        "trellis-consumer-release-src": "trellis-consumer-release-src",
+        "verus-upgrade-trial-src": "verus-upgrade-trial-src"
       }
     },
     "rust-overlay": {
@@ -2218,11 +2219,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774062094,
-        "narHash": "sha256-ba3c+hS7KzEiwtZRGHagIAYdcmdY3rCSWVCyn64rx7s=",
+        "lastModified": 1792480937,
+        "narHash": "sha256-arni7i+yH5ZnkvAN9UotvhMml5+fZyXcMHpiOvI3WFY=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "c807e83cc2e32adc35f51138b3bdef722c0812ab",
+        "rev": "5424e1e6dda30b0626935d2a03a6526db4858d60",
         "type": "github"
       },
       "original": {
@@ -2697,6 +2698,23 @@
         "repo": "valence-public",
         "rev": "99cbe41f742035c37b6a7b503e4748e2e5ce2bea",
         "type": "github"
+      }
+    },
+    "verus-upgrade-trial-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792024274,
+        "narHash": "sha256-4efEysLCy0M2/QBIezn2PC8U51tbfUJjS1TTuaOSn64=",
+        "ref": "refs/heads/public-source-base-2026-10-14",
+        "rev": "65058ec60d69e405ffd324c44cf9fcba5177d453",
+        "revCount": 3,
+        "type": "git",
+        "url": "https://github.com/brittonr/terrane.git"
+      },
+      "original": {
+        "rev": "65058ec60d69e405ffd324c44cf9fcba5177d453",
+        "type": "git",
+        "url": "https://github.com/brittonr/terrane.git"
       }
     },
     "wrappers": {

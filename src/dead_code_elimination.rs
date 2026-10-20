@@ -1468,7 +1468,7 @@ mod tests {
         let program = single_block_program(vec![raw_instr(Some(0u32), &[], 1), raw_instr(Some(1u32), &[0u32], 2)]);
         let live = live_sets(vec![vec![false, false]]);
         let optimized = eliminate_dead(&program, &live);
-        assert!(optimized.blocks[0].instrs.is_empty());
+        assert_eq!(optimized.blocks[0].instrs.len(), 0);
     }
 
     #[test]

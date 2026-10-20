@@ -93,6 +93,20 @@ pub fn first_failed_backend_operation(transcript: &BackendTranscript) -> (operat
         if !known_backend_operation(operation) || !transcript.operations[index].succeeded {
             return operation;
         }
+        proof {
+            assert(known_backend_operation_spec(transcript.operations[index as int].operation));
+            assert(transcript.operations[index as int].succeeded);
+            assert forall|i: int| 0 <= i < index + 1 implies #[trigger]
+                known_backend_operation_spec(transcript.operations[i].operation)
+                    && transcript.operations[i].succeeded by {
+                if i < index {
+                    assert(known_backend_operation_spec(transcript.operations[i].operation)
+                        && transcript.operations[i].succeeded);
+                } else {
+                    assert(i == index);
+                }
+            }
+        }
         index += 1;
     }
     BACKEND_ACCEPTED

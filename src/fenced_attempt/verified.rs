@@ -263,9 +263,8 @@ pub proof fn representable_fence_advances(fence: u64)
 } // verus!
 
 #[cfg(test)]
-#[path = "tests/verified_positive.rs"]
-mod verified_positive;
-#[cfg(test)]
 #[path = "tests/verified_negative.rs"]
 mod verified_negative;
-
+#[cfg(test)]
+#[path = "tests/verified_positive.rs"]
+mod verified_positive;

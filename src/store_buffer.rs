@@ -544,7 +544,7 @@ mod tests {
     fn test_store_fence_returns_empty_buffer() {
         let buffer = vec![entry(TEST_ADDR_BASE, STORE_SIZE_WORD, TEST_DATA_OLDER, TEST_SEQ_OLDER)];
         let fenced = store_fence(&buffer);
-        assert!(fenced.is_empty());
+        assert_eq!(fenced.len(), 0);
         assert!(is_fence_satisfied(&fenced));
     }
 

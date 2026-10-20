@@ -382,7 +382,7 @@ mod tests {
     fn test_zero_capacity_exhausted() {
         let mut pool = AsidPool::new(0);
         assert_eq!(pool.allocate(11), None);
-        assert!(pool.slots.is_empty());
+        assert_eq!(pool.slots.len(), 0);
     }
 
     // r[verify sel4-asid.uniqueness]

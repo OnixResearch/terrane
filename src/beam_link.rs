@@ -368,8 +368,8 @@ mod tests {
         assert_eq!(b, vec![SOURCE_PID]);
 
         let (a, b) = unlink_processes(&a, &b, SOURCE_PID, PEER_PID);
-        assert!(a.is_empty());
-        assert!(b.is_empty());
+        assert_eq!(a.len(), 0);
+        assert_eq!(b.len(), 0);
     }
 
     // r[verify beam-link.symmetry]
@@ -403,7 +403,7 @@ mod tests {
         let (next, mailbox) = deliver_exit_signal(&proc, &vec![], SOURCE_PID, REASON_ERROR);
         assert_eq!(next.state, crate::beam_process::BEAM_EXITING);
         assert_eq!(next.exit_reason, REASON_ERROR);
-        assert!(mailbox.is_empty());
+        assert_eq!(mailbox.len(), 0);
     }
 
     // r[verify beam-link.propagation]
@@ -414,7 +414,7 @@ mod tests {
 
         assert_eq!(next.state, BEAM_ALIVE);
         assert_eq!(next.exit_reason, REASON_NORMAL);
-        assert!(mailbox.is_empty());
+        assert_eq!(mailbox.len(), 0);
     }
 
     // r[verify beam-link.trap-exit]
@@ -437,7 +437,7 @@ mod tests {
         let (next, mailbox) = deliver_exit_signal(&proc, &vec![], SOURCE_PID, crate::beam_process::REASON_KILL);
         assert_eq!(next.state, crate::beam_process::BEAM_EXITING);
         assert_eq!(next.exit_reason, crate::beam_process::REASON_KILLED);
-        assert!(mailbox.is_empty());
+        assert_eq!(mailbox.len(), 0);
     }
 
     // r[verify beam-link.propagation]
@@ -447,7 +447,7 @@ mod tests {
         proc.state = BEAM_DEAD;
         let (next, mailbox) = deliver_exit_signal(&proc, &vec![], SOURCE_PID, REASON_ERROR);
         assert_eq!(next.state, BEAM_DEAD);
-        assert!(mailbox.is_empty());
+        assert_eq!(mailbox.len(), 0);
     }
 
     proptest! {

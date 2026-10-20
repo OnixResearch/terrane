@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+- Update current proofs to Verus `0.2026.10.18.7d82994`, Rust `1.99.1`, and matching `vstd`. Pin ordinary Cargo builds to `nightly-2026-10-14`.
+
+- Repair arithmetic, set, ordering, layout, transcript, and capability-tree proofs with explicit facts. Preserve contracts, trust boundaries, and the resource limit.
+
+- Bind the historical March/May comparison to immutable source `65058ec60d69e405ffd324c44cf9fcba5177d453`. Keep its original verifier cohort and expected results.
+
+- Adapt empty-result assertions, string conversions, overlap initialization, and formatting to the pinned nightly tools.
+
+- Refresh current proof-evidence identities after the source changes.
+
 - Published independently derived public dependency sources and replaced Terrane's reachable private Nix inputs with immutable public revisions; original private histories remain withheld.
 - Replaced the stale private Trellis UCAN consumer profile with exact public Terrane source identities and maintained fail-closed compatibility fixtures. Historical proof artifacts, signed receipts and license grants remain unchanged.
 - Migrated the maintained Cairn overlay to the pinned public CLI's workflow registry, selected-policy receipts, and declared-only traceability fields, with negative authority/anchor fixtures; licensed historical policy inputs remain unchanged.

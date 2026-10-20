@@ -391,7 +391,9 @@ mod tests {
 
     fn reference(type_hash: u64, schema_version: u64, closure_hash: u64) -> TypedDurableReference {
         TypedDurableReference {
-            reference_hash: ReferenceHash { raw: 10 + type_hash + schema_version },
+            reference_hash: ReferenceHash {
+                raw: 10 + type_hash + schema_version,
+            },
             value_hash: ValueHash { raw: 20 + type_hash },
             type_hash: TypeHash { raw: type_hash },
             schema_version: SchemaVersion { raw: schema_version },
@@ -418,7 +420,9 @@ mod tests {
             new_reference_hash: new_reference.reference_hash,
             new_type_hash: new_reference.type_hash,
             new_schema_version: new_reference.schema_version,
-            converter_closure_hash: ClosureHash { raw: converter_closure_hash },
+            converter_closure_hash: ClosureHash {
+                raw: converter_closure_hash,
+            },
         }
     }
 
@@ -470,17 +474,23 @@ mod tests {
 
         assert!(unpersist_admitted(
             durable,
-            UnpersistRequest { expected_type_hash: TypeHash { raw: 100 } },
+            UnpersistRequest {
+                expected_type_hash: TypeHash { raw: 100 }
+            },
             &catalog,
         ));
         assert!(!unpersist_admitted(
             durable,
-            UnpersistRequest { expected_type_hash: TypeHash { raw: 101 } },
+            UnpersistRequest {
+                expected_type_hash: TypeHash { raw: 101 }
+            },
             &catalog,
         ));
         assert!(!unpersist_admitted(
             durable,
-            UnpersistRequest { expected_type_hash: TypeHash { raw: 100 } },
+            UnpersistRequest {
+                expected_type_hash: TypeHash { raw: 100 }
+            },
             &unavailable,
         ));
     }

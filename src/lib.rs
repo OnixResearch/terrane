@@ -110,8 +110,8 @@
 //!   linear-memory bounds/grow semantics, control-label branch/return arity, unreachable-stack
 //!   validation, control-frame stack-height restoration, finite `call_indirect` table/signature
 //!   admission, and `br_table` target validation
-//! - `wasm_runtime_bounds` — finite transition, fuel, segmentation, continuation,
-//!   allocation-phase, growth-policy, and exact byte-schedule laws
+//! - `wasm_runtime_bounds` — finite transition, fuel, segmentation, continuation, allocation-phase,
+//!   growth-policy, and exact byte-schedule laws
 //! - `r1cs_constraint` — bounded single-row R1CS shape, modular dot product, and satisfaction
 //!   admission
 //! - `r1cs_boolean` — bounded booleanity row encoding and satisfaction over an R1CS witness slot
@@ -286,8 +286,8 @@
 //! - `sequence` — monotonic ID generation with batch reservation and overflow protection
 //! - `serialization_codec` — finite byte buffers, frames, length prefixes, schema/version,
 //!   checksum-shape metadata, encoder/decoder shape predicates, and bounded round trips
-//! - `scheme_logic` — finite reader spans, explicit interning, module linkage,
-//!   contract/blame metadata, bytecode safety, cycle-safe values, and collection shapes
+//! - `scheme_logic` — finite reader spans, explicit interning, module linkage, contract/blame
+//!   metadata, bytecode safety, cycle-safe values, and collection shapes
 //! - `sequential` — sequential access detection, prefetch triggering
 //! - `signal` — signal set algebra: add/remove/contains, union/intersect, deliverable
 //! - `set_associative_lookup` — cache address decomposition and per-set tag lookup
@@ -459,10 +459,10 @@ pub mod btree_insert;
 pub mod buddy;
 pub mod causal_order;
 pub mod concurrent_composition;
-pub mod consensus_path;
 /// Verified finite crash-fault consensus fast-path proofs.
 #[path = "consensus_fast_path/identity.rs"]
 pub mod consensus_fast_path;
+pub mod consensus_path;
 pub mod consistency_history;
 pub mod consistency_object;
 pub mod consistency_refinement;
@@ -657,13 +657,13 @@ pub mod hdl_emit;
 pub mod hdl_ir;
 pub mod hdl_validation;
 pub mod heap_index;
+pub mod heartbeat;
 /// Verified finite inert HIR attribute-policy admission.
 #[path = "hir/attribute/parsing.rs"]
 pub mod hir_attribute_parsing;
 /// Verified finite owner-scoped AST-to-HIR identifier admission.
 #[path = "frontend_lower/identity.rs"]
 pub mod hir_id_lowering;
-pub mod heartbeat;
 pub mod hypervisor_dirty_log;
 pub mod hypervisor_exit;
 pub mod hypervisor_gpa;
@@ -744,12 +744,12 @@ pub mod mir_dataflow_framework;
 /// Verified finite MIR destruction classification and replacement metadata.
 #[path = "destruct_paths/identity.rs"]
 pub mod mir_destruct;
-/// Verified finite MIR visitor coverage, traversal, and shape preservation.
-#[path = "mir_walk/identity.rs"]
-pub mod mir_visitor_traversal;
 /// Verified finite MIR phase, pass, validation, and artifact-state traces.
 #[path = "mir_pass_pipeline/identity.rs"]
 pub mod mir_pass_pipeline;
+/// Verified finite MIR visitor coverage, traversal, and shape preservation.
+#[path = "mir_walk/identity.rs"]
+pub mod mir_visitor_traversal;
 pub mod ml_batch_iterator;
 pub mod ml_confusion_matrix;
 pub mod ml_dataset_split;
@@ -980,14 +980,14 @@ pub mod tiling;
 pub mod timeseries;
 pub mod tlb_shootdown;
 pub mod token_timestamp;
+pub mod topo_sort;
 /// Verified finite typed configuration normal forms and import policy.
 #[path = "normal_input/identity.rs"]
 pub mod total_config;
-pub mod topo_sort;
+pub mod trace_relation;
 /// Verified finite `#[track_caller]` ABI metadata and admission.
 #[path = "track/caller/abi.rs"]
 pub mod track_caller_abi;
-pub mod trace_relation;
 pub mod transfer;
 pub mod trust_level;
 pub mod two_phase;

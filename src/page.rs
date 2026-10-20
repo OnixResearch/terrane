@@ -7,6 +7,8 @@
 
 #[cfg(verus_keep_ghost)]
 use vstd::arithmetic::div_mod::lemma_fundamental_div_mod;
+#[cfg(verus_keep_ghost)]
+use vstd::arithmetic::div_mod::lemma_mod_multiples_basic;
 use vstd::prelude::*;
 
 verus! {
@@ -157,9 +159,7 @@ proof fn page_start_aligned(frame: u64, page_size: u64)
     requires page_size > 0, frame as int * page_size as int <= u64::MAX as int
     ensures is_page_aligned_spec(page_start_spec(frame, page_size), page_size)
 {
-    let start = frame as int * page_size as int;
-    assert(start % page_size as int == 0) by(nonlinear_arith)
-        requires page_size as int > 0, start == frame as int * page_size as int;
+    lemma_mod_multiples_basic(frame as int, page_size as int);
 }
 
 // r[verify page.start-address]
@@ -283,8 +283,7 @@ proof fn page_start_of_frame(addr: u64, page_size: u64)
             addr as int == page_size as int * frame + addr as int % page_size as int,
             0 <= addr as int % page_size as int,
             start == frame * page_size as int;
-    assert(start % page_size as int == 0) by(nonlinear_arith)
-        requires page_size as int > 0, start == frame * page_size as int;
+    lemma_mod_multiples_basic(frame, page_size as int);
 }
 
 // --- radix_index ---

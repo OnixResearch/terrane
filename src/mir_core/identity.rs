@@ -33,12 +33,12 @@ pub use model::LocalRole;
 pub use model::Operand;
 pub use model::Place;
 pub use model::Projection;
+pub use model::RETURN_PLACE;
 pub use model::Rejection;
 pub use model::Rvalue;
 pub use model::Statement;
 pub use model::Terminator;
 pub use model::TypeTag;
-pub use model::RETURN_PLACE;
 
 #[cfg(test)]
 mod tests;

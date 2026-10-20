@@ -201,7 +201,7 @@ mod tests {
     #[test]
     fn test_generic_closure_empty_start() {
         let result = generic_closure(&vec![], &vec![]);
-        assert!(result.is_empty());
+        assert_eq!(result.len(), 0);
     }
 
     proptest! {

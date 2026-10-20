@@ -1725,7 +1725,7 @@ mod tests {
         );
         assert!(validate_br(&mut state, CONTROL_DEPTH_ZERO));
         assert!(!state.reachable);
-        assert!(state.operand_types.is_empty());
+        assert_eq!(state.operand_types.len(), 0);
     }
 
     // r[verify wasm-validation.br-table]
@@ -1810,7 +1810,7 @@ mod tests {
         );
         assert!(validate_br_table(&mut state, &vec![CONTROL_DEPTH_ZERO], CONTROL_DEPTH_ONE));
         assert!(!state.reachable);
-        assert!(state.operand_types.is_empty());
+        assert_eq!(state.operand_types.len(), 0);
 
         let mut mismatch = validation_state(
             Vec::<WasmValueType>::new(),
@@ -1978,7 +1978,7 @@ mod tests {
         assert!(state.reachable);
         assert_eq!(state.operand_types, vec![WasmValueType::I64]);
         assert_eq!(state.control.len(), CONTROL_DEPTH_ONE);
-        assert!(state.frames.is_empty());
+        assert_eq!(state.frames.len(), 0);
     }
 
     // r[verify wasm-validation.control-frame]
@@ -2005,7 +2005,7 @@ mod tests {
             validation_state(Vec::<WasmValueType>::new(), vec![function_label(Vec::<WasmValueType>::new())], false);
         assert!(validate_enter_block(&mut state, vec![WasmValueType::I32], vec![WasmValueType::I64]));
         assert!(!state.reachable);
-        assert!(state.operand_types.is_empty());
+        assert_eq!(state.operand_types.len(), 0);
         assert_eq!(state.frames[0].entry_height, MEMORY_INDEX_ZERO);
     }
 
@@ -2022,7 +2022,7 @@ mod tests {
         assert!(state.reachable);
         assert_eq!(state.operand_types, vec![WasmValueType::I64, WasmValueType::I32]);
         assert_eq!(state.control.len(), CONTROL_DEPTH_ONE);
-        assert!(state.frames.is_empty());
+        assert_eq!(state.frames.len(), 0);
     }
 
     // r[verify wasm-validation.block-end]
@@ -2057,7 +2057,7 @@ mod tests {
         assert!(state.reachable);
         assert_eq!(state.operand_types, vec![WasmValueType::I64, WasmValueType::I32]);
         assert_eq!(state.control.len(), CONTROL_DEPTH_ONE);
-        assert!(state.frames.is_empty());
+        assert_eq!(state.frames.len(), 0);
     }
 
     // r[verify wasm-validation.block-end]
@@ -2068,7 +2068,7 @@ mod tests {
         assert!(!validate_end_control_frame(&mut state));
         assert!(state.reachable);
         assert_eq!(state.operand_types, vec![WasmValueType::I32]);
-        assert!(state.frames.is_empty());
+        assert_eq!(state.frames.len(), 0);
     }
 
     // r[verify wasm-locals.access]

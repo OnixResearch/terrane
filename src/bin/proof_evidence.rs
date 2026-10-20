@@ -7,10 +7,10 @@ use std::process::ExitCode;
 use serde::Deserialize;
 use serde::Serialize;
 
-#[path = "../tooling/locator.rs"]
-mod locator;
 #[path = "../tooling/evidence_roots.rs"]
 mod evidence_roots;
+#[path = "../tooling/locator.rs"]
+mod locator;
 
 use evidence_roots::ArtifactOutputRoot;
 use evidence_roots::ProofEvidenceInputRoot;
@@ -382,14 +382,19 @@ fn fenced_attempt_record(facts: &RepoFacts) -> Result<ProofRecord, String> {
     let mut record = record_for_scope(FENCED_ATTEMPT_SCOPE, FENCED_ATTEMPT_PATHS, FENCED_ATTEMPT_COMMAND, facts)?;
     record.requirement_ids = collect_refs_for_paths(&record.source_paths, &facts.path_text, R_VERIFY_PREFIX)
         .into_iter()
-        .filter(|id| id.starts_with("fenced-attempt-admission.") && facts.requirements.contains(id) && facts.impl_refs.contains(id))
+        .filter(|id| {
+            id.starts_with("fenced-attempt-admission.")
+                && facts.requirements.contains(id)
+                && facts.impl_refs.contains(id)
+        })
         .collect();
     record.proof_functions = FENCED_ATTEMPT_PROOF_FUNCTIONS.iter().map(|name| (*name).to_string()).collect();
     record.algorithm_profile = FENCED_ATTEMPT_PROFILE.to_string();
     record.executable_oracle_symbol = "verified_logic::fenced_attempt_admission::verified::admit".to_string();
     record.downstream_validation_requirement =
         "classify events against complete retained history; prove consumer projection or rerun".to_string();
-    record.claims = vec!["records a finite Trellis spec/executable decision equality for caller-admitted facts".to_string()];
+    record.claims =
+        vec!["records a finite Trellis spec/executable decision equality for caller-admitted facts".to_string()];
     record.non_claims.extend([
         "not event digest computation or complete-history lookup".to_string(),
         "not Mantle runtime equivalence or downstream correctness".to_string(),
@@ -642,7 +647,11 @@ fn sorted_json(bundle: &ProofBundle) -> Result<String, String> {
     })
 }
 
-fn collect_repo_files(input: &ProofEvidenceInputRoot, relative_dir: &str, path_text: &mut BTreeMap<String, String>) -> Result<(), String> {
+fn collect_repo_files(
+    input: &ProofEvidenceInputRoot,
+    relative_dir: &str,
+    path_text: &mut BTreeMap<String, String>,
+) -> Result<(), String> {
     let dir = locator(relative_dir)?;
     if !input.is_dir(&dir) {
         return Ok(());
@@ -680,9 +689,7 @@ fn load_repo_facts(input: &ProofEvidenceInputRoot) -> Result<RepoFacts, String> 
     collect_repo_files(input, "tests", &mut path_text)?;
     for path in [REQUIREMENTS_PATH, PROOF_GAP_PATH, MODULE_INDEX_PATH] {
         let locator_value = locator(path)?;
-        let text = input
-            .read_to_string(&locator_value)
-            .map_err(|err| format!("failed to read {path}: {err}"))?;
+        let text = input.read_to_string(&locator_value).map_err(|err| format!("failed to read {path}: {err}"))?;
         path_text.insert(path.to_string(), text);
     }
     let requirements = extract_requirement_ids(
@@ -929,7 +936,7 @@ mod tests {
             generated_by: GENERATOR_PATH.to_string(),
             records: vec![fixture_record(&facts)],
         };
-        assert!(validate_bundle(&bundle, &facts).is_empty());
+        assert_eq!(validate_bundle(&bundle, &facts).len(), 0);
     }
 
     #[test]
@@ -954,7 +961,7 @@ mod tests {
         };
         assert!(validate_bundle(&bundle, &facts).iter().any(|error| error.contains("unsupported schema")));
         bundle.schema_version = SCHEMA_VERSION.to_string();
-        assert!(validate_bundle(&bundle, &facts).is_empty());
+        assert_eq!(validate_bundle(&bundle, &facts).len(), 0);
     }
 
     #[test]

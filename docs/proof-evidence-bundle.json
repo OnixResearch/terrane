@@ -36,7 +36,7 @@
         {
           "path": "docs/requirements.md",
           "algorithm": "blake3",
-          "digest": "0521813efbd3f30f528c5d36ef03c0d960f979cd508809143363bcca70270cf8"
+          "digest": "ee6ced3207e18afd7354b00c9413c8e79f2e96aa6b3bd758c64f90eb4fb42a61"
         },
         {
           "path": "src/arithmetic.rs",
@@ -98,7 +98,7 @@
         {
           "path": "docs/requirements.md",
           "algorithm": "blake3",
-          "digest": "0521813efbd3f30f528c5d36ef03c0d960f979cd508809143363bcca70270cf8"
+          "digest": "ee6ced3207e18afd7354b00c9413c8e79f2e96aa6b3bd758c64f90eb4fb42a61"
         },
         {
           "path": "src/consensus_fast_path/agreement.rs",
@@ -113,7 +113,7 @@
         {
           "path": "src/consensus_fast_path/identity.rs",
           "algorithm": "blake3",
-          "digest": "29daf61ccddfa3ed454b937fb383b5b64e21f50d2e5e8181c2ed04d9e396cf35"
+          "digest": "70ca8c23e932292f29a6fb836c90ca0e18fb0d95bd9347399a36bd2f9ca2ad2f"
         },
         {
           "path": "src/consensus_fast_path/membership.rs",
@@ -229,7 +229,7 @@
         {
           "path": "docs/requirements.md",
           "algorithm": "blake3",
-          "digest": "0521813efbd3f30f528c5d36ef03c0d960f979cd508809143363bcca70270cf8"
+          "digest": "ee6ced3207e18afd7354b00c9413c8e79f2e96aa6b3bd758c64f90eb4fb42a61"
         },
         {
           "path": "src/scheme_logic/boundary.rs",
@@ -304,7 +304,7 @@
         {
           "path": "src/scheme_logic/syntax.rs",
           "algorithm": "blake3",
-          "digest": "7b1b8f3c8c63109888192724e22009f465b1411263460c3027459c4b363f4b37"
+          "digest": "e62d49197a979603845f3890ef388e459cc30e45d535a3f43a27718ff0ce93ec"
         },
         {
           "path": "src/scheme_logic/tests/mod.rs",
@@ -387,7 +387,7 @@
         {
           "path": "docs/requirements.md",
           "algorithm": "blake3",
-          "digest": "0521813efbd3f30f528c5d36ef03c0d960f979cd508809143363bcca70270cf8"
+          "digest": "ee6ced3207e18afd7354b00c9413c8e79f2e96aa6b3bd758c64f90eb4fb42a61"
         },
         {
           "path": "src/wasm_runtime_bounds/binding.rs",
@@ -447,7 +447,7 @@
         {
           "path": "src/wasm_runtime_bounds/tests/negative.rs",
           "algorithm": "blake3",
-          "digest": "ff46673bb51fee5d6d4168f243c9fef11ca8699abfb64444ac2defacb03bf1dc"
+          "digest": "67c44300f0ad904eef26d838e5498236bffb2435607ca2703149059e860fa5d5"
         },
         {
           "path": "src/wasm_runtime_bounds/tests/positive.rs",
@@ -517,7 +517,7 @@
         {
           "path": "docs/requirements.md",
           "algorithm": "blake3",
-          "digest": "0521813efbd3f30f528c5d36ef03c0d960f979cd508809143363bcca70270cf8"
+          "digest": "ee6ced3207e18afd7354b00c9413c8e79f2e96aa6b3bd758c64f90eb4fb42a61"
         },
         {
           "path": "src/ucan_signature.rs",
@@ -583,7 +583,7 @@
         {
           "path": "docs/requirements.md",
           "algorithm": "blake3",
-          "digest": "0521813efbd3f30f528c5d36ef03c0d960f979cd508809143363bcca70270cf8"
+          "digest": "ee6ced3207e18afd7354b00c9413c8e79f2e96aa6b3bd758c64f90eb4fb42a61"
         },
         {
           "path": "src/bounded_modular_tree_fold/core.rs",
@@ -656,27 +656,27 @@
         {
           "path": "docs/requirements.md",
           "algorithm": "blake3",
-          "digest": "0521813efbd3f30f528c5d36ef03c0d960f979cd508809143363bcca70270cf8"
+          "digest": "ee6ced3207e18afd7354b00c9413c8e79f2e96aa6b3bd758c64f90eb4fb42a61"
         },
         {
           "path": "src/fenced_attempt/identity.rs",
           "algorithm": "blake3",
-          "digest": "1bca372696deb7d68be296728c6c4128f2c5402880754976d11990bd61683ed7"
+          "digest": "5bd71e912ac3ec48ace31205a36c86fe0d43c5863c586554a2038e63396481cb"
         },
         {
           "path": "src/fenced_attempt/tests/verified_negative.rs",
           "algorithm": "blake3",
-          "digest": "391047a21cec9a8100fb1f6e6535297e0e63296d5f2f90fd610d48e1f2feaefd"
+          "digest": "c9aa821bd78a8de9c0aa1b03664e08e368a5ebde718c34681aac4ec4fba3ad33"
         },
         {
           "path": "src/fenced_attempt/tests/verified_positive.rs",
           "algorithm": "blake3",
-          "digest": "1b91fa5e9b6f551a570806a26a6f0870374aa1dda947788f56ecdd03a2934a4a"
+          "digest": "190c977e8f7df745269eb324116a19833d065ec1a210e2b4f03cf4a19f360bc6"
         },
         {
           "path": "src/fenced_attempt/verified.rs",
           "algorithm": "blake3",
-          "digest": "ceb717657f092747a03501e63a0f2a8aeda7af0aba226e21de725334d47c0549"
+          "digest": "4881b9dd3f78d0fbb11863987bec6e09a4d11d542ca7cc4a26d96855729fd77e"
         }
       ],
       "claims": [
@@ -718,7 +718,7 @@
         {
           "path": "docs/requirements.md",
           "algorithm": "blake3",
-          "digest": "0521813efbd3f30f528c5d36ef03c0d960f979cd508809143363bcca70270cf8"
+          "digest": "ee6ced3207e18afd7354b00c9413c8e79f2e96aa6b3bd758c64f90eb4fb42a61"
         },
         {
           "path": "tests/proof_examples/basic_refinement.rs",

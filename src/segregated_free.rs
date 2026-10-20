@@ -372,7 +372,7 @@ mod tests {
         let mut lists: Vec<Vec<u64>> = vec![Vec::new(); 17];
         seg_free(&mut lists, 200, 3);
         assert_eq!(lists[3], vec![200]);
-        assert!(lists[0].is_empty());
+        assert_eq!(lists[0].len(), 0);
     }
 
     // r[verify segregated-free.total-free]

@@ -19,6 +19,7 @@ pub use canonical::admit_refactor;
 pub use canonical::normalize;
 pub use canonical::select_digest_input;
 pub use model::Compatibility;
+pub use model::DIGEST_BYTES;
 pub use model::Digest;
 pub use model::DigestInput;
 pub use model::Facts;
@@ -27,6 +28,7 @@ pub use model::Field;
 pub use model::HeaderPolicy;
 pub use model::ImportEdge;
 pub use model::Kind;
+pub use model::MAX_ROWS;
 pub use model::Node;
 pub use model::NodeKey;
 pub use model::NormalChild;
@@ -42,8 +44,6 @@ pub use model::Selection;
 pub use model::Table;
 pub use model::Target;
 pub use model::TypeTag;
-pub use model::DIGEST_BYTES;
-pub use model::MAX_ROWS;
 pub use policy::admit_imports;
 
 fn table_width(len: usize, table: model::Table) -> Result<u32, model::Rejection> {

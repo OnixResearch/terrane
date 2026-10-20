@@ -227,6 +227,10 @@
       "timeout_seconds": 600
     }
   ],
-  "schema_version": "trellis-octet-verus-upgrade-trial/v1",
+  "schema_version": "trellis-octet-verus-upgrade-trial/v2",
+  "source_snapshot": {
+    "repository_url": "https://github.com/brittonr/terrane",
+    "revision": "65058ec60d69e405ffd324c44cf9fcba5177d453"
+  },
   "trial_id": "trellis-octet-verus-may17-upgrade-trial"
 }

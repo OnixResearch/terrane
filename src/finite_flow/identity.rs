@@ -29,15 +29,15 @@ pub use model::EdgeState;
 pub use model::FailureClass;
 pub use model::LocationEffect;
 pub use model::LocationState;
+pub use model::MAX_ROUNDS;
+pub use model::MAX_ROWS;
+pub use model::MAX_STATES;
 pub use model::Point;
 pub use model::Rejection;
 pub use model::Results;
 pub use model::StateKey;
 pub use model::Table;
 pub use model::Transfer;
-pub use model::MAX_ROUNDS;
-pub use model::MAX_ROWS;
-pub use model::MAX_STATES;
 pub use tables::admit_analysis;
 pub use tables::apply_transfer;
 

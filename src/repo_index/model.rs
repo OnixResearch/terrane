@@ -73,10 +73,10 @@ impl TryFrom<String> for RepoPath {
     }
 }
 
-impl TryFrom<&str> for RepoPath {
-    type Error = RepoPathError;
+impl std::str::FromStr for RepoPath {
+    type Err = RepoPathError;
 
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
         Self::new(value)
     }
 }
@@ -156,10 +156,10 @@ impl TryFrom<String> for Blake3DigestHex {
     }
 }
 
-impl TryFrom<&str> for Blake3DigestHex {
-    type Error = Blake3DigestHexError;
+impl std::str::FromStr for Blake3DigestHex {
+    type Err = Blake3DigestHexError;
 
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
         Self::new(value)
     }
 }
@@ -238,10 +238,10 @@ impl TryFrom<String> for RequirementId {
     }
 }
 
-impl TryFrom<&str> for RequirementId {
-    type Error = RequirementIdError;
+impl std::str::FromStr for RequirementId {
+    type Err = RequirementIdError;
 
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
         Self::new(value)
     }
 }

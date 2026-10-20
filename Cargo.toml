@@ -35,7 +35,7 @@ redb = "2.6"
 regex = "1.12"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-vstd = "=0.0.0-2026-01-25-0057"
+vstd = "=0.0.0-2026-10-18-0147"
 
 [package.metadata.verus]
 verify = true

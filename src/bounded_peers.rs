@@ -454,7 +454,7 @@ mod tests {
     fn test_collect_self_only() {
         let candidates = vec![42];
         let result = collect_peers(&candidates, 42, 16);
-        assert!(result.is_empty());
+        assert_eq!(result.len(), 0);
     }
 
     // r[verify bounded-peers.non-empty]
@@ -470,7 +470,7 @@ mod tests {
     fn test_collect_zero_max() {
         let candidates = vec![1, 2, 3];
         let result = collect_peers(&candidates, 99, 0);
-        assert!(result.is_empty());
+        assert_eq!(result.len(), 0);
     }
 
     // r[verify bounded-peers.collect]
@@ -478,7 +478,7 @@ mod tests {
     fn test_collect_empty_candidates() {
         let candidates: Vec<u64> = vec![];
         let result = collect_peers(&candidates, 99, 16);
-        assert!(result.is_empty());
+        assert_eq!(result.len(), 0);
     }
 
     // r[verify bounded-peers.bounded]
